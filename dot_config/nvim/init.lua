@@ -1,9 +1,10 @@
 
 local is_unix = vim.loop.os_uname().sysname == "Darwin" 
 
-if is_unix then
-  vim.cmd[[echo 'lol']]
-  end 
+if not is_unix then
+vim.env.PATH = 'C:\\Users\\michael.glaviano\\AppData\\Roaming\\nvm\\v19.3.0;' .. vim.env.PATH
+end 
+
 
 -- custom -- run first to avoid race conditions
 vim.g.loaded_netrw = 1
@@ -318,9 +319,9 @@ local on_attach = function(_, bufnr)
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+  nmap('<leader>gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+  nmap('<leader>gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+  nmap('<leader>gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
@@ -405,7 +406,10 @@ require('lspconfig').sumneko_lua.setup {
 local pid = vim.fn.getpid()
 -- On linux/darwin if using a release build, otherwise under scripts/OmniSharp(.Core)(.cmd)
 -- NOTE: does not work with ~ to mean home folder
-local omnisharp_bin = "/Users/mg/.local/share/nvim/mason/packages/omnisharp/OmniSharp"
+local omnisharp_bin = "C:\\Users\\michael.glaviano\\.local\\share\\nvim-data\\mason\\packages\\omnisharp\\OmniSharp.exe"
+if is_unix then
+  omnisharp_bin = "/Users/mg/.local/share/nvim/mason/packages/omnisharp/OmniSharp"
+end
 -- on Windows
 -- local omnisharp_bin = "/path/to/omnisharp/OmniSharp.exe"
 
