@@ -1,0 +1,31 @@
+{
+    "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+    "Lua.workspace.library": [
+        "/Users/mg/.config/nvim",
+        "/Users/mg/.local/share/nvim/site",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/Comment.nvim",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/fidget.nvim",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/lualine.nvim",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/LuaSnip",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/mason-lspconfig.nvim",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/mason.nvim",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/nvim-cmp",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/onedark.nvim",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/packer.nvim",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/plenary.nvim",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/telescope.nvim",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/vim-fugitive",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/vim-rhubarb",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/vim-sleuth",
+        "/opt/homebrew/Cellar/neovim/0.7.2_1/share/nvim/runtime",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp/after",
+        "/Users/mg/.local/share/nvim/site/pack/packer/start/cmp_luasnip/after",
+        "${3rd}/luassert/library"
+    ]
+}

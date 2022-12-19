@@ -1,0 +1,13 @@
+larger projects:
+- make it possible to update kickstart base config direct from github without losing my changes
+				- try to get changes out of kickstart and into custom files
+				- address redundancy in vim.opts in defaults.lua vs init.lua
+				- consider contributing to quickstart: treesitter config should optionally import an override config if it exists
+- track dotfiles with chez moi
+				- delete .omnisharp roslyn config and see what happens, if necessary, track with chezmoi
+				- track iterm config in chezmoi
+- conditional configuration by OS: node provider, omnisharp binary
+- tmux passthrough ctrl-a for vim panes
+- org mode
+	- neorg?
+
