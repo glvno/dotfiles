@@ -353,7 +353,7 @@ require('mason').setup()
 
 -- Enable the following language servers
 -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'omnisharp', 'volar', 'svelte'}
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'volar', 'svelte', 'csharp_ls' }
 
 -- Ensure the servers above are installed
 require('mason-lspconfig').setup {
@@ -395,50 +395,24 @@ require('lspconfig').sumneko_lua.setup {
       diagnostics = {
         globals = { 'vim' },
       },
-      workspace = { library = vim.api.nvim_get_runtime_file('', true) },
+      workspace = { library = vim.api.nvim_get_runtime_file('', true), checkThirdParty = false },
       -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = { enable = false },
     },
   },
 }
 
--- custom omnisharp setup, relocate if possible to plugins.lua
-local pid = vim.fn.getpid()
--- On linux/darwin if using a release build, otherwise under scripts/OmniSharp(.Core)(.cmd)
--- NOTE: does not work with ~ to mean home folder
-local omnisharp_bin = "C:\\Users\\michael.glaviano\\.local\\share\\nvim-data\\mason\\packages\\omnisharp\\OmniSharp.exe"
-if is_unix then
-  omnisharp_bin = "/Users/mg/.local/share/nvim/mason/packages/omnisharp/OmniSharp"
-end
--- on Windows
--- local omnisharp_bin = "/path/to/omnisharp/OmniSharp.exe"
-
 local config = {
-  on_attach = on_attach,
-  capabilities = capabilities,
+   on_attach = on_attach,
+   capabilities = capabilities,
   handlers = {
-    ["textDocument/definition"] = require('omnisharp_extended').handler,
+    ["textDocument/definition"] = require('csharpls_extended').handler,
   },
-  cmd = { omnisharp_bin, '--languageserver' , '--hostPID', tostring(pid) },
+  cmd = { 'csharp-ls' },
   -- rest of your settings
 }
+require'lspconfig'.csharp_ls.setup(config)
 
-require'lspconfig'.omnisharp.setup(config)
-
--- require'lspconfig'.emmet_ls.setup({
---   on_attach = on_attach,
---   capabilities = capabilities,
---   filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less', 'vue', 'svelte' },
---   init_options = {
---     html = {
---       options = {
---         -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
---         ["bem.enabled"] = true,
---       },
---     },
---   }
---
--- })
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
