@@ -35,29 +35,22 @@ vim.keymap.set('n', '<leader>bp', bufferline.pick_buffer)
 vim.keymap.set('n', '<leader>bk', bufferline.close_buffer_with_pick)
 
 -- workaround while NvimTreeToggle is broken
--- _G.toggle_nvimtree = function()
--- 	local win_list = vim.api.nvim_list_wins()
--- 	if win_list[1] ~= 1000 then
--- 		local first_win_buf_num = vim.api.nvim_win_get_buf(win_list[1])
--- 		local first_win_buf_name = vim.api.nvim_buf_get_name(first_win_buf_num)
--- 		local is_nvimtree = string.find(first_win_buf_name, "NvimTree_1")
--- 		if is_nvimtree ~= nil then
--- 			vim.api.nvim_win_close(win_list[1], true)
--- 		else
--- 			vim.api.nvim_command("NvimTreeFindFileToggle")
--- 		end
--- 	else
--- 		vim.api.nvim_command("NvimTreeFindFileToggle")
--- 	end
--- end
--- vim.keymap.set('n', '<leader>tt', toggle_nvimtree)
---
-vim.keymap.set('n', '<leader>tt', '<cmd>CHADopen<cr>')
-vim.g.chadtree_settings = {
-	theme = {
-	text_colour_set = 'solarized_dark'
-	}
-}
+_G.toggle_nvimtree = function()
+	local win_list = vim.api.nvim_list_wins()
+	if win_list[1] ~= 1000 then
+		local first_win_buf_num = vim.api.nvim_win_get_buf(win_list[1])
+		local first_win_buf_name = vim.api.nvim_buf_get_name(first_win_buf_num)
+		local is_nvimtree = string.find(first_win_buf_name, "NvimTree_1")
+		if is_nvimtree ~= nil then
+			vim.api.nvim_win_close(win_list[1], true)
+		else
+			vim.api.nvim_command("NvimTreeFindFileToggle")
+		end
+	else
+		vim.api.nvim_command("NvimTreeFindFileToggle")
+	end
+end
+vim.keymap.set('n', '<leader>tt', toggle_nvimtree)
 
 
 
@@ -89,11 +82,9 @@ vim.opt.ignorecase = true
 vim.opt.splitright = true
 
 -- theme
-vim.g.colors_name = 'gruvbox'
-vim.g.gruvbox_italic = 1
-vim.g.gruvbox_contrast_dark = 'soft'
+vim.g.gruvbox_material_background = 'soft'
 vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme gruvbox]])
+vim.cmd([[colorscheme gruvbox-material]])
 
 -- Comment.nvim
 
