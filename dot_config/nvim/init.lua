@@ -1,7 +1,7 @@
 
-local is_unix = vim.loop.os_uname().sysname == "Darwin" 
+ vim.g.is_unix = vim.loop.os_uname().sysname == "Darwin" 
 
-if not is_unix then
+if not vim.g.is_unix then
 vim.env.PATH = 'C:\\Users\\michael.glaviano\\AppData\\Roaming\\nvm\\v19.3.0;' .. vim.env.PATH
 end 
 
@@ -164,10 +164,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- See `:help lualine.txt`
 require('lualine').setup {
   options = {
-    icons_enabled = false,
     theme = 'gruvbox',
-    component_separators = '|',
-    section_separators = '',
   },
 }
 
@@ -224,7 +221,12 @@ vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { des
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>sd', function()
+    return require('telescope.builtin').diagnostics({severity_limit = 2})
+
+end
+  , { desc = '[S]earch [D]iagnostics' })
+
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -353,7 +355,8 @@ require('mason').setup()
 
 -- Enable the following language servers
 -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'volar', 'svelte', 'csharp_ls' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'volar', 'svelte', 'omnisharp' }
+--local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'volar', 'svelte', 'csharp_ls' }
 
 -- Ensure the servers above are installed
 require('mason-lspconfig').setup {
@@ -402,17 +405,57 @@ require('lspconfig').sumneko_lua.setup {
   },
 }
 
+local lspconfigutil = require('lspconfig.util')
+-- local config = {
+--    on_attach = on_attach,
+--    capabilities = capabilities,
+--   handlers = {
+--     ["textDocument/definition"] = require('csharpls_extended').handler,
+--   },
+--   cmd = { 'csharp-ls' },
+--   -- root_dir = lspconfigutil.root_pattern('All.Monster.sln', '*.sln', '*.csproj')
+--   root_dir = function(fname)
+--     return lspconfigutil.find_git_ancestor(fname) .. '/src'
+--   end,
+--   -- rest of your settings
+--   analyze_open_documents_only = false,
+-- }
+-- require'lspconfig'.csharp_ls.setup(config)
+
+
+-- custom omnisharp setup, relocate if possible to plugins.lua
+local pid = vim.fn.getpid()
+-- On linux/darwin if using a release build, otherwise under scripts/OmniSharp(.Core)(.cmd)
+-- NOTE: does not work with ~ to mean home folder
+local omnisharp_bin = "C:\\Users\\michael.glaviano\\.local\\share\\nvim-data\\mason\\packages\\omnisharp\\OmniSharp.exe"
+if vim.g.is_unix then
+  omnisharp_bin = "/Users/mg/.local/share/nvim/mason/packages/omnisharp/OmniSharp"
+end
+
 local config = {
-   on_attach = on_attach,
-   capabilities = capabilities,
+  on_attach = on_attach,
+  capabilities = capabilities,
   handlers = {
-    ["textDocument/definition"] = require('csharpls_extended').handler,
+    ["textDocument/definition"] = require('omnisharp_extended').handler,
+    ["textDocument/publishDiagnostics"] = vim.lsp.with(
+      vim.lsp.diagnostic.on_publish_diagnostics, {
+        signs = {
+          severity_limit = 2
+        },
+        virtual_text = {
+          severity_limit = 2
+        },
+        underline = {
+          severity_limit = 1
+        }
+      }
+    )
   },
-  cmd = { 'csharp-ls' },
+  cmd = { omnisharp_bin, '--languageserver' , '--hostPID', tostring(pid) },
   -- rest of your settings
 }
-require'lspconfig'.csharp_ls.setup(config)
 
+require'lspconfig'.omnisharp.setup(config)
 
 -- nvim-cmp setup
 local cmp = require 'cmp'

@@ -25,30 +25,33 @@ return function(use)
 	use { "ellisonleao/gruvbox.nvim" }
 
 	use { 'tpope/vim-surround' }
-	-- use { 'Hoffs/omnisharp-extended-lsp.nvim'}
-	use 'Decodetalkers/csharpls-extended-lsp.nvim'
+	 use { 'Hoffs/omnisharp-extended-lsp.nvim'}
+	-- use 'Decodetalkers/csharpls-extended-lsp.nvim'
 	use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
 
-	use {
-		'nvim-tree/nvim-tree.lua',
-		requires = {
-			'nvim-tree/nvim-web-devicons', -- optional, for file icons
-		},
-		tag = 'nightly', -- optional, updated every week. (see issue #1193)
-		config = function() 
-			require('nvim-tree').setup{
-				respect_buf_cwd = true,
-				open_on_setup = true,
-				disable_netrw = true,
-				view = {
-					float = {
-						enable = true,
-						quit_on_focus_loss = true
-					},
-				}
-			}
-		end
-	}
+	-- use {
+	-- 	'nvim-tree/nvim-tree.lua',
+	-- 	requires = {
+	-- 		'nvim-tree/nvim-web-devicons', -- optional, for file icons
+	-- 	},
+	-- 	tag = 'nightly', -- optional, updated every week. (see issue #1193)
+	-- 	config = function() 
+	-- 		require('nvim-tree').setup{
+	-- 			respect_buf_cwd = true,
+	-- 			open_on_setup = false,
+	-- 			disable_netrw = true,
+	-- 			view = {
+	-- 				float = {
+	-- 					enable = true,
+	-- 					quit_on_focus_loss = true
+	-- 				},
+	-- 			}
+	-- 		}
+	-- 	end
+	-- }
+	
+	use 'ms-jpq/chadtree'
+
 	-- replace this with possession.nvim when they implement autorestore 
 	use {
 		'rmagatti/auto-session',
@@ -61,5 +64,5 @@ return function(use)
 	}
 
 	use { 'mbbill/undotree' }
-end
 
+end

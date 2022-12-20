@@ -35,22 +35,31 @@ vim.keymap.set('n', '<leader>bp', bufferline.pick_buffer)
 vim.keymap.set('n', '<leader>bk', bufferline.close_buffer_with_pick)
 
 -- workaround while NvimTreeToggle is broken
-_G.toggle_nvimtree = function()
-	local win_list = vim.api.nvim_list_wins()
-	if win_list[1] ~= 1000 then
-		local first_win_buf_num = vim.api.nvim_win_get_buf(win_list[1])
-		local first_win_buf_name = vim.api.nvim_buf_get_name(first_win_buf_num)
-		local is_nvimtree = string.find(first_win_buf_name, "NvimTree_1")
-		if is_nvimtree ~= nil then
-			vim.api.nvim_win_close(win_list[1], true)
-		else
-			vim.api.nvim_command("NvimTreeFindFileToggle")
-		end
-	else
-		vim.api.nvim_command("NvimTreeFindFileToggle")
-	end
-end
-vim.keymap.set('n', '<leader>tt', toggle_nvimtree)
+-- _G.toggle_nvimtree = function()
+-- 	local win_list = vim.api.nvim_list_wins()
+-- 	if win_list[1] ~= 1000 then
+-- 		local first_win_buf_num = vim.api.nvim_win_get_buf(win_list[1])
+-- 		local first_win_buf_name = vim.api.nvim_buf_get_name(first_win_buf_num)
+-- 		local is_nvimtree = string.find(first_win_buf_name, "NvimTree_1")
+-- 		if is_nvimtree ~= nil then
+-- 			vim.api.nvim_win_close(win_list[1], true)
+-- 		else
+-- 			vim.api.nvim_command("NvimTreeFindFileToggle")
+-- 		end
+-- 	else
+-- 		vim.api.nvim_command("NvimTreeFindFileToggle")
+-- 	end
+-- end
+-- vim.keymap.set('n', '<leader>tt', toggle_nvimtree)
+--
+vim.keymap.set('n', '<leader>tt', '<cmd>CHADopen<cr>')
+vim.g.chadtree_settings = {
+	theme = {
+	text_colour_set = 'solarized_dark'
+	}
+}
+
+
 
 -- setopts
 vim.opt.exrc = true
@@ -64,7 +73,11 @@ vim.opt.expandtab = false
 vim.opt.smartindent = true
 vim.opt.wrap = false
 vim.opt.swapfile = false
-vim.opt.undodir = vim.env.XDG_DATA_HOME .. '.nvim/undodir'
+if vim.g.is_unix then
+vim.opt.undodir = '~/.nvim/undodir'
+else 
+vim.opt.undodir = vim.env.XDG_DATA_HOME .. '.nvim\\undodir'
+end 
 vim.opt.undofile = true
 vim.opt.incsearch = true
 vim.opt.scrolloff = 8
