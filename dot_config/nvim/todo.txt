@@ -1,3 +1,10 @@
+- CREATE A TOGGLE SYSTEM TO QUICKY SWITCH AMONG OMNISHARP, CSHARP-LS, and OMNISHARP-VIM
+- consider giving up on fully native lsp for csharp and going with omnisharp-vim and some sort of bridge to the lsp -- null-ls.nvim?
+- dig into csharp-ls source code to determine what SDKs are used to load which projects 
+- weird problem: go to definition with csharp-ls opens definition in a new readonly buffer
+- add nvim-treesitter-context
+- session management is a shit show, remove it until further notice -- try nvim-possession
+
 larger projects:
 - make it possible to update kickstart base config direct from github without losing my changes
 				- try to get changes out of kickstart and into custom files

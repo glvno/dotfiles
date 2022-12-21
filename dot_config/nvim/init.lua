@@ -1,8 +1,8 @@
 
- vim.g.is_unix = vim.loop.os_uname().sysname == "Darwin" 
+vim.g.is_unix = vim.loop.os_uname().sysname == "Darwin" 
 
 if not vim.g.is_unix then
-vim.env.PATH = 'C:\\Users\\michael.glaviano\\AppData\\Roaming\\nvm\\v19.3.0;' .. vim.env.PATH
+  vim.env.PATH = 'C:\\Users\\michael.glaviano\\AppData\\Roaming\\nvm\\v19.3.0;' .. vim.env.PATH
 end 
 
 
@@ -129,7 +129,7 @@ vim.wo.signcolumn = 'yes'
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme onedark]]
+vim.cmd [[colorscheme gruvbox]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -222,7 +222,7 @@ vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', function()
-    return require('telescope.builtin').diagnostics({severity_limit = 2})
+  return require('telescope.builtin').diagnostics({severity_limit = 2})
 
 end
   , { desc = '[S]earch [D]iagnostics' })
@@ -301,9 +301,11 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
+local attaching_buffer_no = 0
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
+  attaching_buffer_no = bufnr
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
   -- to define small helper and utility functions so you don't have to repeat yourself
   -- many times.
@@ -355,8 +357,9 @@ require('mason').setup()
 
 -- Enable the following language servers
 -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'volar', 'svelte', 'omnisharp' }
---local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'volar', 'svelte', 'csharp_ls' }
+-- local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'volar', 'svelte', 'omnisharp' }
+-- local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'volar', 'svelte', 'csharp_ls' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'volar', 'svelte' }
 
 -- Ensure the servers above are installed
 require('mason-lspconfig').setup {
@@ -406,56 +409,97 @@ require('lspconfig').sumneko_lua.setup {
 }
 
 local lspconfigutil = require('lspconfig.util')
--- local config = {
---    on_attach = on_attach,
---    capabilities = capabilities,
+local sln_buddy = require('custom.helpers').sln_helper
+-- require'lspconfig'.csharp_ls.setup( {
+--   on_attach = on_attach,
+--   capabilities = capabilities,
 --   handlers = {
 --     ["textDocument/definition"] = require('csharpls_extended').handler,
 --   },
---   cmd = { 'csharp-ls' },
---   -- root_dir = lspconfigutil.root_pattern('All.Monster.sln', '*.sln', '*.csproj')
---   root_dir = function(fname)
---     return lspconfigutil.find_git_ancestor(fname) .. '/src'
---   end,
---   -- rest of your settings
---   analyze_open_documents_only = false,
--- }
+--   cmd = sln_buddy,
+--   root_dir = lspconfigutil.root_pattern("*.sln"),
+-- })
+
+
+
+-- local function csharp_cmd(new_root_dir)
+--     -- if not new_root_dir then return {'csharp-ls'} end
+--     local utils = require('lspconfig.util')
+--     -- get the path of the ancestor containing a csproj file
+--     local proj_file_path = utils.root_pattern('*.csproj')()
+--     if not proj_file_path then return {'csharp-ls'} end
+--     -- return  the directory name at the end of the path
+--     local proj_file_name
+--     for i in string.gmatch(proj_file_path, "([^\\/]+)") do
+--         proj_file_name = i
+--     end
+--     -- construct cmd using company sln naming conventions
+--     return {'csharp-ls', '-s', proj_file_name .. '.sln'}
+-- end
+--
+-- require('lspconfig').csharp_ls.setup({
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+--   handlers = {
+--     ["textDocument/definition"] = require('csharpls_extended').handler,
+--   },
+--     cmd = csharp_cmd(),
+--     on_new_config = function(new_config, new_root_dir)
+--         new_config.cmd = csharp_cmd(new_root_dir)
+--     end,
+--   root_dir = lspconfigutil.root_pattern("*.sln"),
+-- })
+
+require'lspconfig'.csharp_ls.setup({
+  autostart = false,
+  on_attach = on_attach,
+  capabilities = capabilities,
+  handlers = {
+    ["textDocument/definition"] = require('csharpls_extended').handler,
+  },
+  cmd = sln_buddy(),
+  root_dir = lspconfigutil.root_pattern('*.sln')
+})
+
 -- require'lspconfig'.csharp_ls.setup(config)
 
 
 -- custom omnisharp setup, relocate if possible to plugins.lua
-local pid = vim.fn.getpid()
--- On linux/darwin if using a release build, otherwise under scripts/OmniSharp(.Core)(.cmd)
--- NOTE: does not work with ~ to mean home folder
-local omnisharp_bin = "C:\\Users\\michael.glaviano\\.local\\share\\nvim-data\\mason\\packages\\omnisharp\\OmniSharp.exe"
-if vim.g.is_unix then
-  omnisharp_bin = "/Users/mg/.local/share/nvim/mason/packages/omnisharp/OmniSharp"
-end
-
-local config = {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  handlers = {
-    ["textDocument/definition"] = require('omnisharp_extended').handler,
-    ["textDocument/publishDiagnostics"] = vim.lsp.with(
-      vim.lsp.diagnostic.on_publish_diagnostics, {
-        signs = {
-          severity_limit = 2
-        },
-        virtual_text = {
-          severity_limit = 2
-        },
-        underline = {
-          severity_limit = 1
-        }
-      }
-    )
-  },
-  cmd = { omnisharp_bin, '--languageserver' , '--hostPID', tostring(pid) },
-  -- rest of your settings
-}
-
-require'lspconfig'.omnisharp.setup(config)
+-- local pid = vim.fn.getpid()
+-- local omnisharp_bin = "C:\\Users\\michael.glaviano\\.local\\share\\nvim-data\\mason\\packages\\omnisharp\\OmniSharp.exe"
+-- if vim.g.is_unix then
+--   omnisharp_bin = "/Users/mg/.local/share/nvim/mason/packages/omnisharp/OmniSharp"
+-- end
+--
+-- local root_pattern = require('lspconfig.util').root_pattern
+-- local config = {
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+-- root_dir = function (...) -- to even work with a single .cs file :)
+--     local result = root_pattern('.sln')(...) or root_pattern('.csproj')(...)
+--     return result ~= nil and result or vim.loop.cwd()
+--   end,
+--   handlers = {
+--     ["textDocument/definition"] = require('omnisharp_extended').handler,
+--     ["textDocument/publishDiagnostics"] = vim.lsp.with(
+--       vim.lsp.diagnostic.on_publish_diagnostics, {
+--         signs = {
+--           severity_limit = 2
+--         },
+--         virtual_text = {
+--           severity_limit = 2
+--         },
+--         underline = {
+--           severity_limit = 1
+--         }
+--       }
+--     )
+--   },
+--   cmd = { omnisharp_bin, '--languageserver' , '--hostPID', tostring(pid) },
+--   -- rest of your settings
+-- }
+--
+-- require'lspconfig'.omnisharp.setup(config)
 
 -- nvim-cmp setup
 local cmp = require 'cmp'

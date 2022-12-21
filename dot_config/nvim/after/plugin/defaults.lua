@@ -51,6 +51,13 @@ _G.toggle_nvimtree = function()
 	end
 end
 vim.keymap.set('n', '<leader>tt', toggle_nvimtree)
+--
+-- vim.keymap.set('n', '<leader>tt', '<cmd>CHADopen<cr>')
+-- vim.g.chadtree_settings = {
+-- 	theme = {
+-- 	text_colour_set = 'trapdoor'
+-- 	}
+-- }
 
 
 
@@ -82,9 +89,9 @@ vim.opt.ignorecase = true
 vim.opt.splitright = true
 
 -- theme
-vim.g.gruvbox_material_background = 'soft'
+-- vim.g.gruvbox_material_background = 'soft'
 vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme gruvbox-material]])
+-- vim.cmd([[colorscheme gruvbox-material]])
 
 -- Comment.nvim
 
