@@ -45,8 +45,8 @@ return function(use)
 	vim.cmd("colorscheme gruvbox")
 
 	use { 'tpope/vim-surround' }
-	 -- use { 'Hoffs/omnisharp-extended-lsp.nvim'}
-	use 'Decodetalkers/csharpls-extended-lsp.nvim'
+	 use { 'Hoffs/omnisharp-extended-lsp.nvim'}
+	-- use 'Decodetalkers/csharpls-extended-lsp.nvim'
 	use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
 
 	use {
