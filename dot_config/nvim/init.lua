@@ -27,8 +27,8 @@ require('packer').startup(function(use)
     'neovim/nvim-lspconfig',
     requires = {
       -- Automatically install LSPs to stdpath for neovim
-      -- 'williamboman/mason.nvim',
-      -- 'williamboman/mason-lspconfig.nvim',
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
 
       -- Useful status updates for LSP
       'j-hui/fidget.nvim',
@@ -357,14 +357,14 @@ end
 
 -- Enable the following language servers
 -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
--- local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'volar', 'svelte', 'omnisharp' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'volar', 'svelte', 'omnisharp' }
 -- local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'volar', 'svelte', 'csharp_ls' }
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'volar', 'svelte' }
+-- local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'volar', 'svelte' }
 
 -- Ensure the servers above are installed
--- require('mason-lspconfig').setup {
---   ensure_installed = servers,
--- }
+require('mason-lspconfig').setup {
+  ensure_installed = servers,
+}
 
 -- nvim-cmp supports additional completion capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -466,8 +466,8 @@ local sln_buddy = require('custom.helpers').sln_helper
 
 -- custom omnisharp setup, relocate if possible to plugins.lua
 local pid = vim.fn.getpid()
--- local omnisharp_bin = "C:\\Users\\michael.glaviano\\.local\\share\\nvim-data\\mason\\packages\\omnisharp\\OmniSharp.exe"
-local omnisharp_bin = "C:\\Users\\michael.glaviano\\OmniSharp\\OmniSharp.exe"
+local omnisharp_bin = "C:\\Users\\michael.glaviano\\.local\\share\\nvim-data\\mason\\packages\\omnisharp\\OmniSharp.exe"
+-- local omnisharp_bin = "C:\\Users\\michael.glaviano\\OmniSharp\\OmniSharp.exe"
 if vim.g.is_unix then
   omnisharp_bin = "/Users/mg/.local/share/nvim/mason/packages/omnisharp/OmniSharp"
 end
