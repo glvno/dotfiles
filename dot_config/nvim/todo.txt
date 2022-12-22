@@ -1,12 +1,12 @@
-- CREATE A TOGGLE SYSTEM TO QUICKY SWITCH AMONG OMNISHARP, CSHARP-LS, and OMNISHARP-VIM
 - session management is a shit show, remove it until further notice -- try nvim-possession
 - improve cmd generator to prune off .core, .application, .infrastructure, and .tests -- necessary?
+- get chezmoi auto pushing and pulling
+- get rid of hardcoded sln selection logic
+	- default to sln selection menu if not found
+- diagnose diagnostics
 
 larger projects:
-- make it possible to update kickstart base config direct from github without losing my changes
-				- try to get changes out of kickstart and into custom files
-				- address redundancy in vim.opts in defaults.lua vs init.lua
-				- consider contributing to quickstart: treesitter config should optionally import an override config if it exists
+- massive reorganization
 - tmux passthrough ctrl-a for vim panes
 - org mode
 	- neorg?
