@@ -1,6 +1,5 @@
 - session management is a shit show, remove it until further notice -- try nvim-possession
 - improve cmd generator to prune off .core, .application, .infrastructure, and .tests -- necessary?
-- get chezmoi auto pushing and pulling
 - get rid of hardcoded sln selection logic
 	- default to sln selection menu if not found
 - diagnose diagnostics
