@@ -7,10 +7,11 @@ end
 
 
 -- custom -- run first to avoid race conditions
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
 -- Install packer
 
+local start_time 
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 local is_bootstrap = false
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
@@ -19,6 +20,12 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   vim.cmd [[packadd packer.nvim]]
 end
 
+
+local before_init = function() 
+  start_time = os.time() 
+  vim.cmd[[colorscheme gruvbox-material]]
+  print('initializing lsp')
+end
 require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
@@ -305,7 +312,11 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
-  print('lsp attached')
+  local end_time = os.time() 
+  vim.cmd[[colorscheme gruvbox]]
+  local elapsed_time = end_time - start_time
+
+  print('lsp attached in ' .. tostring(elapsed_time) .. ' seconds')
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
   -- to define small helper and utility functions so you don't have to repeat yourself
   -- many times.
@@ -319,6 +330,7 @@ local on_attach = function(_, bufnr)
 
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
+
 
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
@@ -353,13 +365,9 @@ local on_attach = function(_, bufnr)
 end
 
 -- Setup mason so it can manage external tooling
--- require('mason').setup()
+require('mason').setup()
 
--- Enable the following language servers
--- Feel free to add/remove any LSPs that you want here. They will automatically be installed
 local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'volar', 'svelte', 'omnisharp' }
--- local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'volar', 'svelte', 'csharp_ls' }
--- local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'volar', 'svelte' }
 
 -- Ensure the servers above are installed
 require('mason-lspconfig').setup {
@@ -370,104 +378,40 @@ require('mason-lspconfig').setup {
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
--- for _, lsp in ipairs(servers) do
---   require('lspconfig')[lsp].setup {
---     on_attach = on_attach,
---     capabilities = capabilities,
---   }
--- end
+for _, lsp in ipairs(servers) do
+  require('lspconfig')[lsp].setup {
+    on_attach = on_attach,
+    before_init = before_init,
+    capabilities = capabilities,
+  }
+end
 
--- Turn on lsp status information
-require('fidget').setup()
 
--- Example custom configuration for lua
---
--- Make runtime files discoverable to the server
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
 require('lspconfig').sumneko_lua.setup {
   on_attach = on_attach,
+  before_init = before_init,
   capabilities = capabilities,
   settings = {
     Lua = {
       runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT)
         version = 'LuaJIT',
-        -- Setup your lua path
         path = runtime_path,
       },
       diagnostics = {
         globals = { 'vim' },
       },
       workspace = { library = vim.api.nvim_get_runtime_file('', true), checkThirdParty = false },
-      -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = { enable = false },
     },
   },
 }
 
-local lspconfigutil = require('lspconfig.util')
-local sln_buddy = require('custom.helpers').sln_helper
--- require'lspconfig'.csharp_ls.setup( {
---   on_attach = on_attach,
---   capabilities = capabilities,
---   handlers = {
---     ["textDocument/definition"] = require('csharpls_extended').handler,
---   },
---   cmd = sln_buddy,
---   root_dir = lspconfigutil.root_pattern("*.sln"),
--- })
-
-
-
--- local function csharp_cmd(new_root_dir)
---     -- if not new_root_dir then return {'csharp-ls'} end
---     local utils = require('lspconfig.util')
---     -- get the path of the ancestor containing a csproj file
---     local proj_file_path = utils.root_pattern('*.csproj')()
---     if not proj_file_path then return {'csharp-ls'} end
---     -- return  the directory name at the end of the path
---     local proj_file_name
---     for i in string.gmatch(proj_file_path, "([^\\/]+)") do
---         proj_file_name = i
---     end
---     -- construct cmd using company sln naming conventions
---     return {'csharp-ls', '-s', proj_file_name .. '.sln'}
--- end
---
--- require('lspconfig').csharp_ls.setup({
---   on_attach = on_attach,
---   capabilities = capabilities,
---   handlers = {
---     ["textDocument/definition"] = require('csharpls_extended').handler,
---   },
---     cmd = csharp_cmd(),
---     on_new_config = function(new_config, new_root_dir)
---         new_config.cmd = csharp_cmd(new_root_dir)
---     end,
---   root_dir = lspconfigutil.root_pattern("*.sln"),
--- })
-
--- require'lspconfig'.csharp_ls.setup({
---   autostart = false,
---   on_attach = on_attach,
---   capabilities = capabilities,
---   handlers = {
---     ["textDocument/definition"] = require('csharpls_extended').handler,
---   },
---   cmd = sln_buddy(),
---   root_dir = lspconfigutil.root_pattern('*.sln')
--- })
-
--- require'lspconfig'.csharp_ls.setup(config)
-
-
--- custom omnisharp setup, relocate if possible to plugins.lua
 local pid = vim.fn.getpid()
 local omnisharp_bin = "C:\\Users\\michael.glaviano\\.local\\share\\nvim-data\\mason\\packages\\omnisharp\\OmniSharp.exe"
--- local omnisharp_bin = "C:\\Users\\michael.glaviano\\OmniSharp\\OmniSharp.exe"
 if vim.g.is_unix then
   omnisharp_bin = "/Users/mg/.local/share/nvim/mason/packages/omnisharp/OmniSharp"
 end
@@ -475,10 +419,7 @@ end
 local root_pattern = require('lspconfig.util').root_pattern
 local config = {
   -- autostart = false,
-  before_init = function() 
-  print('initializing lsp')
-  end,
-
+  before_init = before_init,
   on_attach = on_attach,
   capabilities = capabilities,
   root_dir = root_pattern('*.sln'),
@@ -499,7 +440,6 @@ local config = {
     )
   },
   cmd = require('custom.helpers').sln_helper_omni(omnisharp_bin, pid),
-  -- rest of your settings
 }
 
 require'lspconfig'.omnisharp.setup(config)
@@ -547,5 +487,3 @@ cmp.setup {
   },
 }
 
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et

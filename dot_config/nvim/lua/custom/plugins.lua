@@ -21,8 +21,7 @@ return function(use)
 		config = function() 
 			require('bufferline').setup{ options = { show_tab_indicators = true }} end }
 	use { 'shaunsingh/nord.nvim' }
-
-	-- use { "sainnhe/gruvbox-material" }
+	use {'sainnhe/gruvbox-material'}
 	use { "ellisonleao/gruvbox.nvim" }
 
 	require("gruvbox").setup({
@@ -45,31 +44,9 @@ return function(use)
 	vim.cmd("colorscheme gruvbox")
 
 	use { 'tpope/vim-surround' }
-	 use { 'Hoffs/omnisharp-extended-lsp.nvim'}
-	-- use 'Decodetalkers/csharpls-extended-lsp.nvim'
+	use { 'Hoffs/omnisharp-extended-lsp.nvim'}
 	use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
 
-	use {
-		'nvim-tree/nvim-tree.lua',
-		requires = {
-			'nvim-tree/nvim-web-devicons', -- optional, for file icons
-		},
-		tag = 'nightly', -- optional, updated every week. (see issue #1193)
-		config = function() 
-			require('nvim-tree').setup{
-				respect_buf_cwd = true,
-				open_on_setup = false,
-				disable_netrw = true,
-				view = {
-					float = {
-						enable = true,
-						quit_on_focus_loss = true
-					},
-				}
-			}
-		end
-	}
-	
 	-- replace this with possession.nvim when they implement autorestore 
 	use {
 		'rmagatti/auto-session',
@@ -82,5 +59,15 @@ return function(use)
 	}
 
 	use { 'mbbill/undotree' }
+	use {
+		'j-hui/fidget.nvim',
+		config = require('fidget').setup{}
+	}
 
+use {
+ 'nvim-treesitter/nvim-treesitter-context',
+		config = function()
+			require('auto-session').setup{}
+		end
+	}
 end
