@@ -29,6 +29,12 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]ind [F]iles' 
 vim.api.nvim_set_keymap('n', ',', '<cmd>lua project_files()<CR>', {noremap=true})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[F]ind with live [g]rep' })
 
+vim.api.nvim_set_keymap(
+  "n",
+  "<space>tk",
+  ":Telescope keymaps<cr>",
+  { noremap = true }
+)
 -- tree 
 vim.api.nvim_set_keymap(
   "n",
