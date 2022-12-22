@@ -1,17 +1,11 @@
 
-vim.g.is_unix = vim.loop.os_uname().sysname == "Darwin" 
+vim.g.is_unix = vim.loop.os_uname().sysname == "Darwin"
 
 if not vim.g.is_unix then
   vim.env.PATH = 'C:\\Users\\michael.glaviano\\AppData\\Roaming\\nvm\\v19.3.0;' .. vim.env.PATH
-end 
+end
 
-
--- custom -- run first to avoid race conditions
--- vim.g.loaded_netrw = 1
--- vim.g.loaded_netrwPlugin = 1
--- Install packer
-
-local start_time 
+local start_time
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 local is_bootstrap = false
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
@@ -21,8 +15,8 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 end
 
 
-local before_init = function() 
-  start_time = os.time() 
+local before_init = function()
+  start_time = os.time()
   vim.cmd[[colorscheme gruvbox-material]]
   print('initializing lsp')
 end
@@ -312,7 +306,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
-  local end_time = os.time() 
+  local end_time = os.time()
   vim.cmd[[colorscheme gruvbox]]
   local elapsed_time = end_time - start_time
 
@@ -486,4 +480,3 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
-

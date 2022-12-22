@@ -18,16 +18,17 @@ vim.keymap.set('n', '<leader>l', '<C-W>l')
 local builtin = require('telescope.builtin')
 local utils = require('telescope.utils')
 _G.project_files = function()
-	local _, ret, _ = utils.get_os_command_output({ 'git', 'rev-parse', '--is-inside-work-tree' }) 
-	if ret == 0 then 
-		builtin.git_files() 
+	local _, ret, _ = utils.get_os_command_output({ 'git', 'rev-parse', '--is-inside-work-tree' })
+	if ret == 0 then
+		builtin.git_files()
 	else
 		builtin.find_files()
-	end 
-end 
+	end
+end
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]ind [F]iles' })
 vim.api.nvim_set_keymap('n', ',', '<cmd>lua project_files()<CR>', {noremap=true})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[F]ind with live [g]rep' })
+vim.keymap.set('n', '<leader>ps', builtin.grep_string({search = vim.fn.input("Grep for > ")}))
 
 -- bufferline
 local bufferline = require('bufferline')
@@ -36,9 +37,9 @@ vim.keymap.set('n', '<leader>bk', bufferline.close_buffer_with_pick)
 
 -- setopts
 vim.opt.exrc = true
-vim.opt.nu = true 
+vim.opt.nu = true
 vim.opt.hlsearch = false
-vim.opt.hidden = true 
+vim.opt.hidden = true
 vim.opt.errorbells = false
 vim.opt.tabstop = 2
 vim.opt.softtabstop = -1
@@ -48,9 +49,9 @@ vim.opt.wrap = false
 vim.opt.swapfile = false
 if vim.g.is_unix then
 vim.opt.undodir = '~/.nvim/undodir'
-else 
+else
 vim.opt.undodir = vim.env.XDG_DATA_HOME .. '.nvim\\undodir'
-end 
+end
 vim.opt.undofile = true
 vim.opt.incsearch = true
 vim.opt.scrolloff = 8

@@ -15,10 +15,10 @@ return function(use)
 		"windwp/nvim-ts-autotag",
 		config = function() require("nvim-ts-autotag").setup {} end
 	}
-	use {'akinsho/bufferline.nvim', 
-		tag = "v3.*", 
+	use {'akinsho/bufferline.nvim',
+		tag = "v3.*",
 		requires = 'nvim-tree/nvim-web-devicons',
-		config = function() 
+		config = function()
 			require('bufferline').setup{ options = { show_tab_indicators = true }} end }
 	use { 'shaunsingh/nord.nvim' }
 	use {'sainnhe/gruvbox-material'}
