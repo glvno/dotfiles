@@ -195,6 +195,11 @@ require('gitsigns').setup {
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
+  extensions = {
+    file_browser = {
+      hijack_netrw = true
+    }
+  },
   defaults = {
     mappings = {
       i = {
@@ -207,7 +212,7 @@ require('telescope').setup {
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
-
+require("telescope").load_extension "file_browser"
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
@@ -407,7 +412,7 @@ require('lspconfig').sumneko_lua.setup {
 local pid = vim.fn.getpid()
 local omnisharp_bin = "C:\\Users\\michael.glaviano\\.local\\share\\nvim-data\\mason\\packages\\omnisharp\\OmniSharp.exe"
 if vim.g.is_unix then
-  omnisharp_bin = "/Users/mg/.local/share/nvim/mason/packages/omnisharp/OmniSharp"
+  omnisharp_bin = "/Users/mg/.local/share/nvim/mason/bin/omnisharp"
 end
 
 local root_pattern = require('lspconfig.util').root_pattern
@@ -435,6 +440,19 @@ local config = {
   },
   cmd = require('custom.helpers').sln_helper_omni(omnisharp_bin, pid),
 }
+
+if vim.g.is_unix then
+  before_init = before_init
+  on_attach = on_attach
+  config = {
+  root_dir = root_pattern('*.sln', '*.csproj'),
+  handlers = {
+    ["textDocument/definition"] = require('omnisharp_extended').handler
+  },
+  cmd = {omnisharp_bin, '--languageserver', '--hostPID', tostring(pid)}   
+  }
+
+end
 
 require'lspconfig'.omnisharp.setup(config)
 

@@ -70,4 +70,5 @@ use {
 			require('auto-session').setup{}
 		end
 	}
+	use { 'nvim-telescope/telescope-file-browser.nvim'}
 end

@@ -28,8 +28,14 @@ end
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]ind [F]iles' })
 vim.api.nvim_set_keymap('n', ',', '<cmd>lua project_files()<CR>', {noremap=true})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[F]ind with live [g]rep' })
-vim.keymap.set('n', '<leader>ps', builtin.grep_string({search = vim.fn.input("Grep for > ")}))
 
+-- tree 
+vim.api.nvim_set_keymap(
+  "n",
+  "<space>tt",
+  ":Telescope file_browser<cr>",
+  { noremap = true }
+)
 -- bufferline
 local bufferline = require('bufferline')
 vim.keymap.set('n', '<leader>bp', bufferline.pick_buffer)
