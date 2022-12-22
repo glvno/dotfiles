@@ -64,11 +64,12 @@ return function(use)
 		config = require('fidget').setup{}
 	}
 
-use {
- 'nvim-treesitter/nvim-treesitter-context',
+	use {
+		'nvim-treesitter/nvim-treesitter-context',
 		config = function()
 			require('auto-session').setup{}
 		end
 	}
 	use { 'nvim-telescope/telescope-file-browser.nvim'}
+	use 'f-person/git-blame.nvim'
 end
