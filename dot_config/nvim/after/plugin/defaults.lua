@@ -60,7 +60,7 @@ vim.opt.smartindent = true
 vim.opt.wrap = false
 vim.opt.swapfile = false
 if vim.g.is_unix then
-	vim.opt.undodir = '$XDG_DATA_HOME/.nvim/undodir'
+	vim.opt.undodir = vim.env.HOME .. '/.nvim/undodir'
 else
 	vim.opt.undodir = vim.env.XDG_DATA_HOME .. '.nvim\\undodir'
 end
