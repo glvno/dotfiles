@@ -3,6 +3,9 @@
 - get rid of hardcoded sln selection logic
 	- default to sln selection menu if not found
 - diagnose diagnostics
+- create custom fidget for omnisharp, given that it doesn't dispatch events that fidget understands
+- move monitor
+- fix undodir on windows
 
 larger projects:
 - massive reorganization

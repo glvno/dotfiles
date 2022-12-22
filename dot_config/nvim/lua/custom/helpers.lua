@@ -11,7 +11,6 @@ function M.sln_helper_omni(omnisharp_bin, pid)
 	for i in string.gmatch(proj_file_path, "([^\\/]+)") do
 		proj_file_name = i
 	end
-	print(proj_file_name or 'nilch')
 	-- hardcoded exceptions
 	if proj_file_name == 'CCI.Public_v3' or proj_file_name == 'CCI.Public_v3.Tests' then
 			return {omnisharp_bin, '--languageserver', '-s', 'CCI.Commerce'  .. '.sln', '--hostPID', tostring(pid)  }

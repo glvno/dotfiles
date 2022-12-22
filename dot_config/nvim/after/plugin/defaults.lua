@@ -1,6 +1,6 @@
 -- hop 
 local hop = require('hop')
-vim.keymap.set('n', 's', function()
+vim.keymap.set('', 's', function()
 	hop.hint_char1({ direction = nil })
 end, {remap=true})
 
@@ -30,17 +30,17 @@ vim.api.nvim_set_keymap('n', ',', '<cmd>lua project_files()<CR>', {noremap=true}
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[F]ind with live [g]rep' })
 
 vim.api.nvim_set_keymap(
-  "n",
-  "<space>tk",
-  ":Telescope keymaps<cr>",
-  { noremap = true }
+	"n",
+	"<space>tk",
+	":Telescope keymaps<cr>",
+	{ noremap = true }
 )
 -- tree 
 vim.api.nvim_set_keymap(
-  "n",
-  "<space>tt",
-  ":Telescope file_browser<cr>",
-  { noremap = true }
+	"n",
+	"<space>tt",
+	":Telescope file_browser<cr>",
+	{ noremap = true }
 )
 -- bufferline
 local bufferline = require('bufferline')
@@ -60,9 +60,9 @@ vim.opt.smartindent = true
 vim.opt.wrap = false
 vim.opt.swapfile = false
 if vim.g.is_unix then
-vim.opt.undodir = '~/.nvim/undodir'
+	vim.opt.undodir = '~/.nvim/undodir'
 else
-vim.opt.undodir = vim.env.XDG_DATA_HOME .. '.nvim\\undodir'
+	vim.opt.undodir = vim.env.XDG_DATA_HOME .. '.nvim\\undodir'
 end
 vim.opt.undofile = true
 vim.opt.incsearch = true
