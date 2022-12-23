@@ -63,6 +63,7 @@ if vim.g.is_unix then
 	vim.opt.undodir = vim.env.HOME .. '/.nvim/undodir'
 else
 	vim.opt.undodir = vim.env.XDG_DATA_HOME .. '.nvim\\undodir'
+	-- fun
 end
 vim.opt.undofile = true
 vim.opt.incsearch = true
