@@ -72,4 +72,6 @@ return function(use)
 	}
 	use { 'nvim-telescope/telescope-file-browser.nvim'}
 	use 'f-person/git-blame.nvim'
+	use 'mfussenegger/nvim-dap'
+use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
 end

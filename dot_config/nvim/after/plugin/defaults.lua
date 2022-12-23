@@ -106,3 +106,32 @@ end
 
 -- undotree 
 vim.keymap.set('n', '<leader>tu', '<cmd>UndotreeToggle<CR>')
+
+-- debug
+if vim.g.is_unix then
+	local dap = require('dap')
+	dap.adapters.coreclr = {
+		type = 'executable',
+		-- command = [[C:\Users\michael.glaviano\.local\share\nvim-data\mason\packages\netcoredbg\netcoredbg\netcoredbg.exe]],
+		command = [[C:\Users\michael.glaviano\netcoredbg\netcoredbg.exe]],
+		args = {'--interpreter=vscode'}
+	}
+	dap.configurations.cs = {
+		{
+			type = "coreclr",
+			name = "attach - netcoredbg",
+			request = "attach",
+			processId = '${command:pickProcess}',
+		}
+	}
+	local dapui =  require("dapui")
+	dap.listeners.after.event_initialized["dapui_config"] = function()
+		dapui.open()
+	end
+	dap.listeners.before.event_terminated["dapui_config"] = function()
+		dapui.close()
+	end
+	dap.listeners.before.event_exited["dapui_config"] = function()
+		dapui.close()
+	end
+end

@@ -70,6 +70,14 @@ require('packer').startup(function(use)
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
+  use {'nvim-orgmode/orgmode' } 
+  local orgmode = require('orgmode')
+  local default_notes = [[C:\Users\michael.glaviano\.local\share\notes\refile.org]]
+  local agenda_files = { [[C:\Users\michael.glaviano\.local\share\notes\*]] }
+  orgmode.setup({
+    org_agenda_files = agenda_files,
+    org_default_notes_file = default_notes
+  })
 
   -- Add custom plugins to packer from /nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -203,8 +211,8 @@ require('telescope').setup {
   defaults = {
     mappings = {
       i = {
-        ['<C-u>'] = false,
-        ['<C-d>'] = false,
+	['<C-u>'] = false,
+	['<C-d>'] = false,
       },
     },
   },
@@ -237,10 +245,14 @@ end
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
+require('orgmode').setup_ts_grammar()
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c_sharp', 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'svelte', 'vim' },
-  highlight = { enable = true },
+  ensure_installed = { 'org', 'c_sharp', 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'svelte', 'vim' },
+  highlight = { 
+    enable = true,
+    additional_vim_regex_highlighting = {'org'}
+  },
   rainbow = {
     enable = true,
     extended_mode = true,
@@ -261,42 +273,42 @@ require('nvim-treesitter.configs').setup {
       enable = true,
       lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
       keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ['aa'] = '@parameter.outer',
-        ['ia'] = '@parameter.inner',
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['ac'] = '@class.outer',
-        ['ic'] = '@class.inner',
+	-- You can use the capture groups defined in textobjects.scm
+	['aa'] = '@parameter.outer',
+	['ia'] = '@parameter.inner',
+	['af'] = '@function.outer',
+	['if'] = '@function.inner',
+	['ac'] = '@class.outer',
+	['ic'] = '@class.inner',
       },
     },
     move = {
       enable = true,
       set_jumps = true, -- whether to set jumps in the jumplist
       goto_next_start = {
-        [']m'] = '@function.outer',
-        [']]'] = '@class.outer',
+	[']m'] = '@function.outer',
+	[']]'] = '@class.outer',
       },
       goto_next_end = {
-        [']M'] = '@function.outer',
-        [']['] = '@class.outer',
+	[']M'] = '@function.outer',
+	[']['] = '@class.outer',
       },
       goto_previous_start = {
-        ['[m'] = '@function.outer',
-        ['[['] = '@class.outer',
+	['[m'] = '@function.outer',
+	['[['] = '@class.outer',
       },
       goto_previous_end = {
-        ['[M'] = '@function.outer',
-        ['[]'] = '@class.outer',
+	['[M'] = '@function.outer',
+	['[]'] = '@class.outer',
       },
     },
     swap = {
       enable = true,
       swap_next = {
-        ['<leader>a'] = '@parameter.inner',
+	['<leader>a'] = '@parameter.inner',
       },
       swap_previous = {
-        ['<leader>A'] = '@parameter.inner',
+	['<leader>A'] = '@parameter.inner',
       },
     }
   },
@@ -397,11 +409,11 @@ require('lspconfig').sumneko_lua.setup {
   settings = {
     Lua = {
       runtime = {
-        version = 'LuaJIT',
-        path = runtime_path,
+	version = 'LuaJIT',
+	path = runtime_path,
       },
       diagnostics = {
-        globals = { 'vim' },
+	globals = { 'vim' },
       },
       workspace = { library = vim.api.nvim_get_runtime_file('', true), checkThirdParty = false },
       telemetry = { enable = false },
@@ -426,15 +438,15 @@ local config = {
     ["textDocument/definition"] = require('omnisharp_extended').handler,
     ["textDocument/publishDiagnostics"] = vim.lsp.with(
       vim.lsp.diagnostic.on_publish_diagnostics, {
-        signs = {
-          severity_limit = 2
-        },
-        virtual_text = {
-          severity_limit = 2
-        },
-        underline = {
-          severity_limit = 1
-        }
+	signs = {
+	  severity_limit = 2
+	},
+	virtual_text = {
+	  severity_limit = 2
+	},
+	underline = {
+	  severity_limit = 1
+	}
       }
     )
   },
@@ -445,11 +457,11 @@ if vim.g.is_unix then
   before_init = before_init
   on_attach = on_attach
   config = {
-  root_dir = root_pattern('*.sln', '*.csproj'),
-  handlers = {
-    ["textDocument/definition"] = require('omnisharp_extended').handler
-  },
-  cmd = {omnisharp_bin, '--languageserver', '--hostPID', tostring(pid)}   
+    root_dir = root_pattern('*.sln', '*.csproj'),
+    handlers = {
+      ["textDocument/definition"] = require('omnisharp_extended').handler
+    },
+    cmd = {omnisharp_bin, '--languageserver', '--hostPID', tostring(pid)}   
   }
 
 end
@@ -476,20 +488,20 @@ cmp.setup {
     },
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.select_next_item()
+	cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
+	luasnip.expand_or_jump()
       else
-        fallback()
+	fallback()
       end
     end, { 'i', 's' }),
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.select_prev_item()
+	cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
+	luasnip.jump(-1)
       else
-        fallback()
+	fallback()
       end
     end, { 'i', 's' }),
   },
@@ -498,3 +510,4 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+require("dapui").setup()
