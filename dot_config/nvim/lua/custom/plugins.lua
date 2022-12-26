@@ -43,7 +43,16 @@ return function(use)
 	})
 	vim.cmd("colorscheme gruvbox")
 
-	use { 'tpope/vim-surround' }
+	-- use { 'tpope/vim-surround' }
+use({
+    "kylechui/nvim-surround",
+    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+    config = function()
+        require("nvim-surround").setup({
+            -- Configuration here, or leave empty to use defaults
+        })
+    end
+})
 	use { 'Hoffs/omnisharp-extended-lsp.nvim'}
 	use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
 
