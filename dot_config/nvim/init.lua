@@ -1,4 +1,3 @@
-
 vim.g.is_unix = vim.loop.os_uname().sysname == "Darwin"
 
 if not vim.g.is_unix then
@@ -18,7 +17,6 @@ end
 local before_init = function()
   start_time = os.time()
   vim.cmd[[colorscheme gruvbox-material]]
-  print('initializing lsp')
 end
 
 require('packer').startup(function(use)
