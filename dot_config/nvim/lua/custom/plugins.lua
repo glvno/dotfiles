@@ -69,7 +69,7 @@ return {
 		end
 	},
 	{
-		'numToStr/Comment.nvim', -- "gc" to comment visual regions/lines
+		'numToStr/Comment.nvim', -- 'gc' to comment visual regions/lines
 		config = function()
 			require('Comment').setup()
 		end
@@ -109,7 +109,7 @@ return {
 				org_agenda_files = agenda_files,
 				org_default_notes_file = default_notes
 			})
-	end },
+		end },
 
 
 	{
@@ -121,24 +121,24 @@ return {
 		end
 	},
 
-	{	"windwp/nvim-autopairs",
-		config = function() require("nvim-autopairs").setup {} end
+	{	'windwp/nvim-autopairs',
+		config = function() require('nvim-autopairs').setup {} end
 	},
 
-	{	"windwp/nvim-ts-autotag",
-		config = function() require("nvim-ts-autotag").setup {} end
+	{	'windwp/nvim-ts-autotag',
+		config = function() require('nvim-ts-autotag').setup {} end
 	},
 	{
 		'akinsho/bufferline.nvim',
-		version = "v3.*",
+		version = 'v3.*',
 		config = function()
 			require('bufferline').setup{ options = { show_tab_indicators = true }} end },
 	{	 'shaunsingh/nord.nvim' },
 	{'sainnhe/gruvbox-material'},
-	{"ellisonleao/gruvbox.nvim",
+	{'ellisonleao/gruvbox.nvim',
 		config = function()
 
-			require("gruvbox").setup({
+			require('gruvbox').setup({
 				undercurl = true,
 				underline = true,
 				bold = true,
@@ -149,20 +149,20 @@ return {
 				invert_tabline = false,
 				invert_intend_guides = false,
 				inverse = true, -- invert background for search, diffs, statuslines and errors
-				contrast = "soft", -- can be "hard", "soft" or empty string
+				contrast = 'soft', -- can be 'hard', 'soft' or empty string
 				palette_overrides = {},
 				overrides = {},
 				dim_inactive = false,
 				transparent_mode = false,
 			})
-			vim.cmd("colorscheme gruvbox")
-	end },
+			vim.cmd('colorscheme gruvbox')
+		end },
 
 	{
-		"kylechui/nvim-surround",
-		version = "*", -- use for stability; omit to use `main` branch for the latest features
+		'kylechui/nvim-surround',
+		version = '*', -- use for stability; omit to use `main` branch for the latest features
 		config = function()
-			require("nvim-surround").setup({
+			require('nvim-surround').setup({
 				-- configuration here, or leave empty to use defaults
 			})
 		end
@@ -184,15 +184,15 @@ return {
 	{'nvim-telescope/telescope-file-browser.nvim'},
 	'f-person/git-blame.nvim',
 	'mfussenegger/nvim-dap',
-	{ "rcarriga/nvim-dap-ui", dependencies = {"mfussenegger/nvim-dap"} },
+	{ 'rcarriga/nvim-dap-ui', dependencies = {'mfussenegger/nvim-dap'} },
 	{
 		'simrat39/rust-tools.nvim',
 	},
 	'kyazdani42/nvim-web-devicons',
 
-	{"folke/trouble.nvim",
+	{'folke/trouble.nvim',
 		config = function()
-			require("trouble").setup {
+			require('trouble').setup {
 				-- your configuration comes here
 				-- or leave it empty to use the default settings
 				-- refer to the configuration section below
@@ -200,9 +200,15 @@ return {
 		end
 	},
 	{
-		"maan2003/lsp_lines.nvim",
+		'maan2003/lsp_lines.nvim',
 		config = function()
-			require("lsp_lines").setup()
+			require('lsp_lines').setup()
 		end,
 	},
+	'dstein64/vim-startuptime',
+	{
+		'akinsho/toggleterm.nvim', tag = '*', config = function()
+		require('toggleterm').setup()
+	end
+	}
 }

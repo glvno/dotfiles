@@ -4,8 +4,8 @@
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+vim.keymap.set('n', 'k', 'v:count == 0 ? 'gk' : 'k'', { expr = true, silent = true })
+vim.keymap.set('n', 'j', 'v:count == 0 ? 'gj' : 'j'', { expr = true, silent = true })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -55,16 +55,16 @@ vim.api.nvim_set_keymap('n', ',', '<cmd>lua project_files()<CR>', {noremap=true}
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[F]ind with live [g]rep' })
 
 vim.api.nvim_set_keymap(
-	"n",
-	"<space>tk",
-	":Telescope keymaps<cr>",
+	'n',
+	'<space>tk',
+	':Telescope keymaps<cr>',
 	{ noremap = true }
 )
 -- tree 
 vim.api.nvim_set_keymap(
-	"n",
-	"<space>tt",
-	":Telescope file_browser<cr>",
+	'n',
+	'<space>tt',
+	':Telescope file_browser<cr>',
 	{ noremap = true }
 )
 -- bufferline
@@ -117,7 +117,7 @@ vim.opt.smartcase = true
 vim.opt.ignorecase = true
 vim.opt.splitright = true
 
-vim.o.background = "dark" -- or "light" for light mode
+vim.o.background = 'dark' -- or 'light' for light mode
 vim.o.cmdheight = 0
 
 -- Set highlight on search
@@ -168,7 +168,7 @@ vim.keymap.set('n', '<leader>dvo', '<cmd>DiffviewOpen<cr>')
 vim.keymap.set('n', '<leader>dvc', '<cmd>DiffviewClose<cr>')
 vim.keymap.set('n', '<leader>dvb', function()
 	vim.ui.input({
-		prompt = "diff against branch: ",
+		prompt = 'diff against branch: ',
 		}, function(input)
 			return vim.api.nvim_command('DiffviewOpen ' .. input)
 		end
@@ -196,23 +196,23 @@ dap.adapters.coreclr = {
 -- }
 dap.configurations.cs = {
 	{
-		type = "coreclr",
-		name = "attach - netcoredbg",
-		request = "attach",
+		type = 'coreclr',
+		name = 'attach - netcoredbg',
+		request = 'attach',
 		processId = '${command:pickProcess}',
 	}
 }
-local dapui =  require("dapui")
-dap.listeners.after.event_initialized["dapui_config"] = function()
+local dapui =  require('dapui')
+dap.listeners.after.event_initialized['dapui_config'] = function()
 	dapui.open()
 end
-dap.listeners.before.event_terminated["dapui_config"] = function()
+dap.listeners.before.event_terminated['dapui_config'] = function()
 	dapui.close()
 end
-dap.listeners.before.event_exited["dapui_config"] = function()
+dap.listeners.before.event_exited['dapui_config'] = function()
 	dapui.close()
 end
-require("dapui").setup()
+require('dapui').setup()
 
 
 local api = vim.api
@@ -221,14 +221,14 @@ dap.listeners.after['event_initialized']['me'] = function()
 	for _, buf in pairs(api.nvim_list_bufs()) do
 		local keymaps = api.nvim_buf_get_keymap(buf, 'n')
 		for _, keymap in pairs(keymaps) do
-			if keymap.lhs == "K" then
+			if keymap.lhs == 'K' then
 				table.insert(keymap_restore, keymap)
 				api.nvim_buf_del_keymap(buf, 'n', 'K')
 			end
 		end
 	end
 	api.nvim_set_keymap(
-		'n', 'K', '<Cmd>lua require("dap.ui.widgets").hover()<CR>', { silent = true })
+		'n', 'K', '<Cmd>lua require('dap.ui.widgets').hover()<CR>', { silent = true })
 end
 
 dap.listeners.after['event_terminated']['me'] = function()
@@ -254,22 +254,22 @@ vim.keymap.set('n', '<leader>rd', '<cmd>RustDebuggables<cr>1<cr>')
 
 -- trouble
 -- maybe kill this now that lsplines works
-vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>",
+vim.keymap.set('n', '<leader>xx', '<cmd>TroubleToggle<cr>',
 	{silent = true, noremap = true}
 )
-vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
+vim.keymap.set('n', '<leader>xw', '<cmd>TroubleToggle workspace_diagnostics<cr>',
 	{silent = true, noremap = true}
 )
-vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>",
+vim.keymap.set('n', '<leader>xd', '<cmd>TroubleToggle document_diagnostics<cr>',
 	{silent = true, noremap = true}
 )
-vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>",
+vim.keymap.set('n', '<leader>xl', '<cmd>TroubleToggle loclist<cr>',
 	{silent = true, noremap = true}
 )
-vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
+vim.keymap.set('n', '<leader>xq', '<cmd>TroubleToggle quickfix<cr>',
 	{silent = true, noremap = true}
 )
-vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
+vim.keymap.set('n', 'gR', '<cmd>TroubleToggle lsp_references<cr>',
 	{silent = true, noremap = true}
 )
 

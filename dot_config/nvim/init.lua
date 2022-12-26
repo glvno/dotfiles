@@ -1,4 +1,4 @@
-vim.g.is_osx = vim.loop.os_uname().sysname == "Darwin"
+vim.g.is_osx = vim.loop.os_uname().sysname == 'Darwin'
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
@@ -7,21 +7,21 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- lazy bootstrap
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "--single-branch",
-    "https://github.com/folke/lazy.nvim.git",
+    'git',
+    'clone',
+    '--filter=blob:none',
+    '--single-branch',
+    'https://github.com/folke/lazy.nvim.git',
     lazypath,
   })
 end
 vim.opt.runtimepath:prepend(lazypath)
 
 local plugins = require('custom.plugins')
-require("lazy").setup(plugins)
+require('lazy').setup(plugins)
 
 if not vim.g.is_osx then
   vim.env.PATH = 'C:\\Users\\michael.glaviano\\AppData\\Roaming\\nvm\\v19.3.0;' .. vim.env.PATH
@@ -43,7 +43,7 @@ end
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
-require("telescope").load_extension "file_browser"
+require('telescope').load_extension 'file_browser'
 -- See `:help telescope.builtin`
 
 
@@ -222,9 +222,9 @@ require('lspconfig').sumneko_lua.setup {
 
 -- omnisharp setup
 local pid = vim.fn.getpid()
-local omnisharp_bin = "C:\\Users\\michael.glaviano\\.local\\share\\nvim-data\\mason\\packages\\omnisharp\\OmniSharp.exe"
+local omnisharp_bin = 'C:\\Users\\michael.glaviano\\.local\\share\\nvim-data\\mason\\packages\\omnisharp\\OmniSharp.exe'
 if vim.g.is_osx then
-  omnisharp_bin = "/Users/mg/.local/share/nvim/mason/bin/omnisharp"
+  omnisharp_bin = '/Users/mg/.local/share/nvim/mason/bin/omnisharp'
 end
 
 local root_pattern = require('lspconfig.util').root_pattern
@@ -235,8 +235,8 @@ local config = {
   capabilities = capabilities,
   root_dir = root_pattern('*.sln'),
   handlers = {
-    ["textDocument/definition"] = require('omnisharp_extended').handler,
-    ["textDocument/publishDiagnostics"] = vim.lsp.with(
+    ['textDocument/definition'] = require('omnisharp_extended').handler,
+    ['textDocument/publishDiagnostics'] = vim.lsp.with(
       vim.lsp.diagnostic.on_publish_diagnostics, {
 	signs = {
 	  severity_limit = 2
@@ -259,7 +259,7 @@ if vim.g.is_osx then
   config = {
     root_dir = root_pattern('*.sln', '*.csproj'),
     handlers = {
-      ["textDocument/definition"] = require('omnisharp_extended').handler
+      ['textDocument/definition'] = require('omnisharp_extended').handler
     },
     cmd = {omnisharp_bin, '--languageserver', '--hostPID', tostring(pid)}   
   }
@@ -317,7 +317,7 @@ local extension_path = vim.env.HOME .. '/.local/share/nvim/mason/packages/codell
 local codelldb_path = extension_path .. '/adapter/codelldb'
 local liblldb_path = extension_path .. '/lldb/lib/liblldb.dylib'
 
-local rt = require("rust-tools")
+local rt = require('rust-tools')
 local opts = {
   -- ... other configs
   server = {
