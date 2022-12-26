@@ -378,7 +378,7 @@ end
 -- Setup mason so it can manage external tooling
 require('mason').setup()
 
-local servers = { 'clangd', 'pyright', 'tsserver', 'sumneko_lua', 'volar', 'svelte', 'omnisharp' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'volar', 'svelte', 'omnisharp' }
 
 -- Ensure the servers above are installed
 require('mason-lspconfig').setup {
@@ -510,25 +510,4 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
-
-
-
-local extension_path = vim.env.HOME .. '/.local/share/nvim/mason/packages/codelldb/extension'
-local codelldb_path = extension_path .. '/adapter/codelldb'
-local liblldb_path = extension_path .. '/lldb/lib/liblldb.dylib'
-
-local rt = require("rust-tools")
-local opts = {
-	-- ... other configs
-	server = {
-	  on_attach = on_attach,
-	  before_init = before_init
-	},
-	dap = {
-		adapter = require('rust-tools.dap').get_codelldb_adapter(
-			codelldb_path, liblldb_path)
-	}
-}
-
--- Normal setup
-rt.setup(opts)
+require("dapui").setup()

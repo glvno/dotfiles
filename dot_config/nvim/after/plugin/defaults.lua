@@ -63,7 +63,6 @@ if vim.g.is_unix then
 	vim.opt.undodir = vim.env.HOME .. '/.nvim/undodir'
 else
 	vim.opt.undodir = vim.env.XDG_DATA_HOME .. '.nvim\\undodir'
-	-- fun
 end
 vim.opt.undofile = true
 vim.opt.incsearch = true
@@ -109,98 +108,30 @@ end
 vim.keymap.set('n', '<leader>tu', '<cmd>UndotreeToggle<CR>')
 
 -- debug
-
-local dap = require('dap')
-dap.adapters.coreclr = {
-	type = 'executable',
-	-- command = [[C:\Users\michael.glaviano\.local\share\nvim-data\mason\packages\netcoredbg\netcoredbg\netcoredbg.exe]],
-	command = [[C:\Users\michael.glaviano\netcoredbg\netcoredbg.exe]],
-	args = {'--interpreter=vscode'}
-}
--- dap.adapters.codelldb = {
---   type = 'server',
---   host = '127.0.0.1',
---   port = 13000
--- }
-dap.configurations.cs = {
-	{
-		type = "coreclr",
-		name = "attach - netcoredbg",
-		request = "attach",
-		processId = '${command:pickProcess}',
+if vim.g.is_unix then
+	local dap = require('dap')
+	dap.adapters.coreclr = {
+		type = 'executable',
+		-- command = [[C:\Users\michael.glaviano\.local\share\nvim-data\mason\packages\netcoredbg\netcoredbg\netcoredbg.exe]],
+		command = [[C:\Users\michael.glaviano\netcoredbg\netcoredbg.exe]],
+		args = {'--interpreter=vscode'}
 	}
-}
-local dapui =  require("dapui")
-dap.listeners.after.event_initialized["dapui_config"] = function()
-	dapui.open()
-end
-dap.listeners.before.event_terminated["dapui_config"] = function()
-	dapui.close()
-end
-dap.listeners.before.event_exited["dapui_config"] = function()
-	dapui.close()
-end
-require("dapui").setup()
-
-
-local api = vim.api
-local keymap_restore = {}
-dap.listeners.after['event_initialized']['me'] = function()
-	for _, buf in pairs(api.nvim_list_bufs()) do
-		local keymaps = api.nvim_buf_get_keymap(buf, 'n')
-		for _, keymap in pairs(keymaps) do
-			if keymap.lhs == "K" then
-				table.insert(keymap_restore, keymap)
-				api.nvim_buf_del_keymap(buf, 'n', 'K')
-			end
-		end
+	dap.configurations.cs = {
+		{
+			type = "coreclr",
+			name = "attach - netcoredbg",
+			request = "attach",
+			processId = '${command:pickProcess}',
+		}
+	}
+	local dapui =  require("dapui")
+	dap.listeners.after.event_initialized["dapui_config"] = function()
+		dapui.open()
 	end
-	api.nvim_set_keymap(
-		'n', 'K', '<Cmd>lua require("dap.ui.widgets").hover()<CR>', { silent = true })
-end
-
-dap.listeners.after['event_terminated']['me'] = function()
-	for _, keymap in pairs(keymap_restore) do
-		api.nvim_buf_set_keymap(
-			keymap.buffer,
-			keymap.mode,
-			keymap.lhs,
-			keymap.rhs,
-			{ silent = keymap.silent == 1 }
-		)
+	dap.listeners.before.event_terminated["dapui_config"] = function()
+		dapui.close()
 	end
-	keymap_restore = {}
+	dap.listeners.before.event_exited["dapui_config"] = function()
+		dapui.close()
+	end
 end
-
-vim.keymap.set('n', '<leader>dc', function() require('dap').continue() end)
-vim.keymap.set('n', '<leader>dl', function() require('dap').run_last() end)
-vim.keymap.set('n', '<leader>db', function() require('dap').toggle_breakpoint() end)
-vim.keymap.set('n', '<leader>dso', function() require('dap').step_over() end)
-vim.keymap.set('n', '<leader>dsi', function() require('dap').step_into() end)
-vim.keymap.set('n', '<leader>rd', '<cmd>RustDebuggables<cr>1<cr>')
-
-
--- trouble
--- maybe kill this now that lsplines works
-vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>",
-	{silent = true, noremap = true}
-)
-vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
-	{silent = true, noremap = true}
-)
-vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>",
-	{silent = true, noremap = true}
-)
-vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>",
-	{silent = true, noremap = true}
-)
-vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
-	{silent = true, noremap = true}
-)
-vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
-	{silent = true, noremap = true}
-)
-
-vim.diagnostic.config({
-	virtual_text = false,
-})

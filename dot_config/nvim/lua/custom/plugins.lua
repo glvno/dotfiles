@@ -43,16 +43,7 @@ return function(use)
 	})
 	vim.cmd("colorscheme gruvbox")
 
-	-- use { 'tpope/vim-surround' }
-use({
-    "kylechui/nvim-surround",
-    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
-    config = function()
-        require("nvim-surround").setup({
-            -- Configuration here, or leave empty to use defaults
-        })
-    end
-})
+	use { 'tpope/vim-surround' }
 	use { 'Hoffs/omnisharp-extended-lsp.nvim'}
 	use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
 
@@ -82,57 +73,5 @@ use({
 	use { 'nvim-telescope/telescope-file-browser.nvim'}
 	use 'f-person/git-blame.nvim'
 	use 'mfussenegger/nvim-dap'
-	use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
-	use 'simrat39/rust-tools.nvim'
-	use {
-		"folke/trouble.nvim",
-		requires = "kyazdani42/nvim-web-devicons",
-		config = function()
-			require("trouble").setup {
-				-- your configuration comes here
-				-- or leave it empty to use the default settings
-				-- refer to the configuration section below
-			}
-		end
-	}
-	use({
-		"folke/noice.nvim",
-		config = function()
-			require("noice").setup({
-				-- add any options here
-			})
-		end,
-		requires = {
-			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-			"MunifTanjim/nui.nvim",
-			-- OPTIONAL:
-			--   `nvim-notify` is only needed, if you want to use the notification view.
-			--   If not available, we use `mini` as the fallback
-			"rcarriga/nvim-notify",
-		}
-	})
-	require("noice").setup({
-		lsp = {
-			-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-			override = {
-				["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-				["vim.lsp.util.stylize_markdown"] = true,
-				["cmp.entry.get_documentation"] = true,
-			},
-		},
-		-- you can enable a preset for easier configuration
-		presets = {
-			bottom_search = true, -- use a classic bottom cmdline for search
-			command_palette = true, -- position the cmdline and popupmenu together
-			long_message_to_split = true, -- long messages will be sent to a split
-			inc_rename = false, -- enables an input dialog for inc-rename.nvim
-			lsp_doc_border = false, -- add a border to hover docs and signature help
-		},
-	})
-	use({
-		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-		config = function()
-			require("lsp_lines").setup()
-		end,
-	})
+use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
 end
