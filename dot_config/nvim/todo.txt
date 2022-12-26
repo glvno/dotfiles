@@ -1,11 +1,10 @@
-- migrate to lazy.nvim? PackerSync is awful on windws
 - consider persistence.nvim for session management
+	- possession as well
 - improve cmd generator to prune off .core, .application, .infrastructure, and .tests -- necessary?
 - get rid of hardcoded sln selection logic
 	- default to sln selection menu if not found
 - diagnose diagnostics
 - create custom fidget for omnisharp, given that it doesn't dispatch events that fidget understands
-- rename is_unix to is_osx and add an is_linux bool as well as the appropriate conditionals
 - test on
 	- equipmentdomain
 	- external retail api (despite deprecation)
@@ -26,3 +25,6 @@ larger projects:
 	- vim-tpipeline?
 - replace arch with alpine if i'm only using it for tmux, otherwise consider going full WSL (again)
 	- We're finally on 19044+!!!!!!!!!!!!!!!!!!!!!!!!!!! GUI WSL!!!!!!!!!!!!!!
+- migrate this todo to org and add org files to chezmoi
+	- separate files for work and home so to avoid merge conflicts
+- get tmux opening new windows in current git bash directory (NOT current arch dir)

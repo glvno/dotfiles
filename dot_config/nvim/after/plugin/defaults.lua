@@ -1,18 +1,43 @@
--- hop 
-local hop = require('hop')
-vim.keymap.set('', 's', function()
-	hop.hint_char1({ direction = nil })
-end, {remap=true})
 
--- ergonomics
-vim.keymap.set('i', 'jk', '<esc>')
-vim.keymap.set('i', 'kj', '<esc>')
+-- Keymaps for better default experience
+-- See `:help vim.keymap.set()`
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
--- overwin motion
-vim.keymap.set('n', '<leader>h', '<C-W>h')
-vim.keymap.set('n', '<leader>j', '<C-W>j')
-vim.keymap.set('n', '<leader>k', '<C-W>k')
-vim.keymap.set('n', '<leader>l', '<C-W>l')
+-- Remap for dealing with word wrap
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+-- [[ Highlight on yank ]]
+-- See `:help vim.highlight.on_yank()`
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  group = highlight_group,
+  pattern = '*',
+})
+
+-- telescope
+vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
+vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
+vim.keymap.set('n', '<leader>/', function()
+  -- You can pass additional configuration to telescope to change theme, layout, etc.
+  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+    winblend = 10,
+    previewer = false,
+  })
+end, { desc = '[/] Fuzzily search in current buffer]' })
+
+vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
+vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
+vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>sd', function()
+  return require('telescope.builtin').diagnostics({severity_limit = 2})
+
+end
+  , { desc = '[S]earch [D]iagnostics' })
 
 -- telescope kickstart overrides
 local builtin = require('telescope.builtin')
@@ -47,6 +72,23 @@ local bufferline = require('bufferline')
 vim.keymap.set('n', '<leader>bp', bufferline.pick_buffer)
 vim.keymap.set('n', '<leader>bk', bufferline.close_buffer_with_pick)
 
+-- hop 
+local hop = require('hop')
+vim.keymap.set('', 's', function()
+	hop.hint_char1({ direction = nil })
+end, {remap=true})
+
+-- ergonomics
+vim.keymap.set('i', 'jk', '<esc>')
+vim.keymap.set('i', 'kj', '<esc>')
+
+-- overwin motion
+vim.keymap.set('n', '<leader>h', '<C-W>h')
+vim.keymap.set('n', '<leader>j', '<C-W>j')
+vim.keymap.set('n', '<leader>k', '<C-W>k')
+vim.keymap.set('n', '<leader>l', '<C-W>l')
+
+
 -- setopts
 vim.opt.exrc = true
 vim.opt.nu = true
@@ -59,7 +101,7 @@ vim.opt.expandtab = false
 vim.opt.smartindent = true
 vim.opt.wrap = false
 vim.opt.swapfile = false
-if vim.g.is_unix then
+if vim.g.is_osx then
 	vim.opt.undodir = vim.env.HOME .. '/.nvim/undodir'
 else
 	vim.opt.undodir = vim.env.XDG_DATA_HOME .. '.nvim\\undodir'
@@ -78,6 +120,35 @@ vim.opt.splitright = true
 vim.o.background = "dark" -- or "light" for light mode
 vim.o.cmdheight = 0
 
+-- Set highlight on search
+vim.o.hlsearch = false
+
+-- Make line numbers default
+vim.wo.number = true
+
+-- Enable mouse mode
+vim.o.mouse = 'a'
+
+-- Enable break indent
+vim.o.breakindent = true
+
+-- Save undo history
+vim.o.undofile = true
+
+-- Case insensitive searching UNLESS /C or capital in search
+vim.o.ignorecase = true
+vim.o.smartcase = true
+
+-- Decrease update time
+vim.o.updatetime = 250
+vim.wo.signcolumn = 'yes'
+
+-- Set colorscheme
+vim.o.termguicolors = true
+vim.cmd [[colorscheme gruvbox]]
+
+-- Set completeopt to have a better completion experience
+vim.o.completeopt = 'menuone,noselect'
 -- Comment.nvim
 
 local comment = require('Comment.api')
@@ -206,3 +277,8 @@ vim.diagnostic.config({
 	virtual_text = false,
 })
 
+-- Diagnostic keymaps
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
