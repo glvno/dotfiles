@@ -2,7 +2,7 @@ local wezterm = require 'wezterm'
 local act = wezterm.action
 return {
 	color_scheme = "nord",
-	font = wezterm.font 'JetBrainsMono Nerd Font',
+	font = wezterm.font 'JetBrains Mono NF',
 	hide_tab_bar_if_only_one_tab = true,
 	keys = {
 		-- Rebind OPT-Left, OPT-Right as ALT-b, ALT-f respectively to match Terminal.app behavior
