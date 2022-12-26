@@ -1,6 +1,7 @@
 local wezterm = require 'wezterm'
 local act = wezterm.action
 return {
+	default_prog = { 'C:\\windows\\system32\\wsl.exe -d Arch'},
 	color_scheme = "nord",
 	font = wezterm.font 'JetBrainsMono NF',
 	hide_tab_bar_if_only_one_tab = true,

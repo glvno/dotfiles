@@ -20,6 +20,10 @@ local before_init = function()
   vim.cmd[[colorscheme gruvbox-material]]
   print('initializing lsp')
 end
+
+require('packer').init {
+  max_jobs = 10
+}
 require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'

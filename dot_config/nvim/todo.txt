@@ -1,10 +1,10 @@
-- session management is a shit show, remove it until further notice -- try nvim-possession and maybe contribute to it for autostart
+- migrate to lazy.nvim? PackerSync is awful on windws
+- consider persistence.nvim for session management
 - improve cmd generator to prune off .core, .application, .infrastructure, and .tests -- necessary?
 - get rid of hardcoded sln selection logic
 	- default to sln selection menu if not found
 - diagnose diagnostics
 - create custom fidget for omnisharp, given that it doesn't dispatch events that fidget understands
-- move monitor
 - rename is_unix to is_osx and add an is_linux bool as well as the appropriate conditionals
 - test on
 	- equipmentdomain
@@ -17,13 +17,12 @@
 	- retail shopping
 	- observation api/client
 - see if i can get rust to update diagnostics on change instead of save. in the meantime, hide diagnostics until save
+- investigate input latency in noice.nvim
+- vim split shortcuts
+
 larger projects:
 - massive reorganization
 - tmux passthrough ctrl-a for vim panes
+	- vim-tpipeline?
 - replace arch with alpine if i'm only using it for tmux, otherwise consider going full WSL (again)
-- org mode analog
-	- neorg?
-	- orgmode.nvim
-	- vimwiki + taskwiki
-
-
+	- We're finally on 19044+!!!!!!!!!!!!!!!!!!!!!!!!!!! GUI WSL!!!!!!!!!!!!!!

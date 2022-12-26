@@ -76,6 +76,7 @@ vim.opt.ignorecase = true
 vim.opt.splitright = true
 
 vim.o.background = "dark" -- or "light" for light mode
+vim.o.cmdheight = 0
 
 -- Comment.nvim
 
@@ -204,3 +205,4 @@ vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
 vim.diagnostic.config({
 	virtual_text = false,
 })
+
