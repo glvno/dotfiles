@@ -8,7 +8,7 @@ function M.sln_helper_omni(omnisharp_bin, pid)
 		proj_file_path = vim.loop.cwd()
 	end
 	local proj_file_name
-	for i in string.gmatch(proj_file_path, '([^\\/]+)') do
+	for i in string.gmatch(proj_file_path, "([^\\/]+)") do
 		proj_file_name = i
 	end
 	-- hardcoded exceptions

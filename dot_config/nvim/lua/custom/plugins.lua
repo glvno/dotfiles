@@ -117,7 +117,7 @@ return {
 		branch = 'v2', -- optional but strongly recommended
 		config = function()
 			-- you can configure hop the way you like here; see :h hop-config
-			require('hop').setup { keys = 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz' }
+			require('hop').setup { keys = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' }
 		end
 	},
 
@@ -133,7 +133,6 @@ return {
 		version = 'v3.*',
 		config = function()
 			require('bufferline').setup{ options = { show_tab_indicators = true }} end },
-	{	 'shaunsingh/nord.nvim' },
 	{'sainnhe/gruvbox-material'},
 	{'ellisonleao/gruvbox.nvim',
 		config = function()

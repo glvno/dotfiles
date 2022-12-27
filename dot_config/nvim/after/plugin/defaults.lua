@@ -4,8 +4,8 @@
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', 'v:count == 0 ? 'gk' : 'k'', { expr = true, silent = true })
-vim.keymap.set('n', 'j', 'v:count == 0 ? 'gj' : 'j'', { expr = true, silent = true })
+vim.keymap.set('n', 'k', 'v:count == 0 ? "gk" : "k"', { expr = true, silent = true })
+vim.keymap.set('n', 'j', 'v:count == 0 ? "gj" : "j"', { expr = true, silent = true })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -116,6 +116,7 @@ vim.opt.clipboard = 'unnamedplus'
 vim.opt.smartcase = true
 vim.opt.ignorecase = true
 vim.opt.splitright = true
+vim.opt.fixeol = false
 
 vim.o.background = 'dark' -- or 'light' for light mode
 vim.o.cmdheight = 0
@@ -228,7 +229,7 @@ dap.listeners.after['event_initialized']['me'] = function()
 		end
 	end
 	api.nvim_set_keymap(
-		'n', 'K', '<Cmd>lua require('dap.ui.widgets').hover()<CR>', { silent = true })
+		'n', 'K', '<Cmd>lua require("dap.ui.widgets").hover()<CR>', { silent = true })
 end
 
 dap.listeners.after['event_terminated']['me'] = function()
