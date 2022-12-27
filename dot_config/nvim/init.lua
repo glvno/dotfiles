@@ -52,7 +52,7 @@ require('telescope').load_extension 'file_browser'
 require('orgmode').setup_ts_grammar()
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'org', 'c_sharp', 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'svelte', 'vim' },
+  ensure_installed = { 'org', 'c_sharp', 'lua', 'rust', 'typescript', 'help', 'svelte', 'vim' },
   highlight = { 
     enable = true,
     additional_vim_regex_highlighting = {'org'}
@@ -177,7 +177,7 @@ end
 -- Setup mason so it can manage external tooling
 require('mason').setup()
 
-local servers = { 'clangd', 'pyright', 'tsserver', 'sumneko_lua', 'volar', 'svelte', 'omnisharp' }
+local servers = { 'tsserver', 'sumneko_lua', 'volar', 'svelte', 'omnisharp' }
 
 -- Ensure the servers above are installed
 require('mason-lspconfig').setup {
@@ -201,6 +201,7 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
+require('neodev').setup({})
 require('lspconfig').sumneko_lua.setup {
   on_attach = on_attach,
   before_init = before_init,

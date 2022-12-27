@@ -18,6 +18,7 @@
 - see if i can get rust to update diagnostics on change instead of save. in the meantime, hide diagnostics until save
 - investigate input latency in noice.nvim
 - vim split shortcuts
+- take a look at latest kickstart.nvim and incorporate anything interesting -- neodev as well as using the setup_handlers pattern for mason that was obviously wrong in the first iteration
 
 larger projects:
 - massive reorganization

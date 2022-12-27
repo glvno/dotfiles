@@ -1,5 +1,11 @@
+local xplatform_fzf = {'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+if vim.g.is_osx then
+	xplatform_fzf = { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
+
+end 
 return {
 
+	{'folke/neodev.nvim'},
 	{ -- LSP Configuration & Plugins
 		'neovim/nvim-lspconfig',
 		dependencies = {
@@ -99,7 +105,7 @@ return {
 	},
 
 	-- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
-	{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make', cond = vim.fn.executable 'make' == 1 },
+	xplatform_fzf,
 	{'nvim-orgmode/orgmode',
 		config = function()
 			local orgmode = require('orgmode')
@@ -162,6 +168,10 @@ return {
 		version = '*', -- use for stability; omit to use `main` branch for the latest features
 		config = function()
 			require('nvim-surround').setup({
+				keymaps = {
+					delete = "dS",
+					change = "cS"
+				}
 				-- configuration here, or leave empty to use defaults
 			})
 		end
@@ -207,10 +217,10 @@ return {
 	'dstein64/vim-startuptime',
 	{
 		'akinsho/toggleterm.nvim', config = function()
-		require('toggleterm').setup({
+			require('toggleterm').setup({
 				open_mapping = '<C-\\>',
 				direction = 'float'
 			})
-	end
+		end
 	}
 }
