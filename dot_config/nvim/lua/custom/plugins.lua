@@ -206,7 +206,7 @@ return {
 	},
 	'dstein64/vim-startuptime',
 	{
-		'akinsho/toggleterm.nvim', branch = '*', config = function()
+		'akinsho/toggleterm.nvim', config = function()
 		require('toggleterm').setup({
 				open_mapping = '<C-\\>',
 				direction = 'float'
