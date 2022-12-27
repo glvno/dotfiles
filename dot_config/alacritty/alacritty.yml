@@ -722,6 +722,7 @@ key_bindings:
   # (Windows only)
   #- { key: Return,   mods: Alt,           action: ToggleFullscreen }
   - { key: N,              mods: Control,                    action: SpawnNewInstance      }
+  - { key: Q,              mods: Control,                    action: Quit                  }
 
   # (macOS only)
   #- { key: K,              mods: Command, mode: ~Vi|~Search, chars: "\x0c"                 }
