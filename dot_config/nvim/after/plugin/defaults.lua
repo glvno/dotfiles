@@ -186,8 +186,8 @@ vim.keymap.set('n', '<leader>tu', '<cmd>UndotreeToggle<CR>')
 local dap = require('dap')
 dap.adapters.coreclr = {
 	type = 'executable',
-	-- command = [[C:\Users\michael.glaviano\.local\share\nvim-data\mason\packages\netcoredbg\netcoredbg\netcoredbg.exe]],
-	command = [[C:\Users\michael.glaviano\netcoredbg\netcoredbg.exe]],
+	command = [[C:\Users\michael.glaviano\.local\share\nvim-data\mason\packages\netcoredbg\netcoredbg\netcoredbg.exe]],
+	-- command = [[C:\Users\michael.glaviano\netcoredbg\netcoredbg.exe]],
 	args = {'--interpreter=vscode'}
 }
 -- dap.adapters.codelldb = {
@@ -201,6 +201,7 @@ dap.configurations.cs = {
 		name = 'attach - netcoredbg',
 		request = 'attach',
 		processId = '${command:pickProcess}',
+		stopAtEntry = true
 	}
 }
 local dapui =  require('dapui')
@@ -250,6 +251,7 @@ vim.keymap.set('n', '<leader>dl', function() require('dap').run_last() end)
 vim.keymap.set('n', '<leader>db', function() require('dap').toggle_breakpoint() end)
 vim.keymap.set('n', '<leader>dso', function() require('dap').step_over() end)
 vim.keymap.set('n', '<leader>dsi', function() require('dap').step_into() end)
+vim.keymap.set('n', '<leader>duc', function () require('dapui').close() end)
 vim.keymap.set('n', '<leader>rd', '<cmd>RustDebuggables<cr>1<cr>')
 
 

@@ -243,9 +243,9 @@ local config = {
 			signs = {
 				severity_limit = 2
 			},
-			virtual_text = {
-				severity_limit = 2
-			},
+			-- virtual_text = {
+			-- 	severity_limit = 2
+			-- },
 			underline = {
 				severity_limit = 1
 			}

@@ -20,6 +20,7 @@
 - vim split shortcuts
 - take a look at latest kickstart.nvim and incorporate anything interesting -- neodev as well as using the setup_handlers pattern for mason that was obviously wrong in the first iteration
 - peep telescope undo tree extensions
+- retest dap now that i'm no longer using packer
 
 
 larger projects:
@@ -32,3 +33,4 @@ larger projects:
 	- separate files for work and home so to avoid merge conflicts
 - get tmux opening new windows in current git bash directory (NOT current arch dir)
 - fix busted git bash prompt with some omb themes
+- add new files to proj automatically
