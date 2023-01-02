@@ -21,6 +21,8 @@
 - take a look at latest kickstart.nvim and incorporate anything interesting -- neodev as well as using the setup_handlers pattern for mason that was obviously wrong in the first iteration
 - peep telescope undo tree extensions
 - retest dap now that i'm no longer using packer
+- fix long path problem in telescope
+- replace omp with starship
 
 
 larger projects:

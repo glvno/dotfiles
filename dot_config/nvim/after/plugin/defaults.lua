@@ -151,7 +151,6 @@ vim.cmd [[colorscheme gruvbox]]
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 -- Comment.nvim
-
 local comment = require('Comment.api')
 local esc = vim.api.nvim_replace_termcodes(
 	'<ESC>', true, false, true

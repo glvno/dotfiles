@@ -32,9 +32,10 @@ local start_time
 
 
 local before_init = function()
-	print('initializing lsp')
+	-- print('initializing lsp')
 	start_time = os.time()
 	vim.cmd [[colorscheme gruvbox-material]]
+	vim.cmd [[hi Normal guibg=NONE ctermbg=NONE]]
 end
 
 
