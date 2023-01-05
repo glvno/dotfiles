@@ -35,7 +35,7 @@ local before_init = function()
 	-- print('initializing lsp')
 	start_time = os.time()
 	vim.cmd [[colorscheme gruvbox-material]]
-	vim.cmd [[hi Normal guibg=NONE ctermbg=NONE]]
+	-- vim.cmd [[hi Normal guibg=NONE ctermbg=NONE]]
 end
 
 
@@ -146,9 +146,10 @@ local on_attach = function(_, bufnr)
 
 	nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
 	nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
 	nmap('<leader>gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-	nmap('<leader>gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+	nmap('<leader>gr', function()
+		require('telescope.builtin').lsp_references({truncate_path = true, show_line = false})
+	end , '[G]oto [R]eferences')
 	nmap('<leader>gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
 	nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
 	nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')

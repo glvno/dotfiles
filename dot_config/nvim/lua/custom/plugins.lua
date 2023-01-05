@@ -99,6 +99,7 @@ return {
 							['<C-d>'] = false,
 						},
 					},
+						path_display = {"truncate"}
 				},
 			}
 		end
@@ -161,7 +162,7 @@ return {
 				palette_overrides = {},
 				overrides = {},
 				dim_inactive = false,
-				transparent_mode = false,
+				transparent_mode = true,
 			})
 			vim.cmd('colorscheme gruvbox')
 		end },
@@ -234,16 +235,13 @@ return {
 				-- In particular, when you set it to 'all', that means all available groups
 
 				-- example of akinsho/nvim-bufferline.lua
-				-- "BufferLineTabClose",
-				-- "BufferlineBufferSelected",
-				-- "BufferLineFill", -- clear this
-				-- "BufferLineBackground",
-				-- "BufferLineSeparator", -- clear
-				-- "BufferLineIndicatorSelected",
-			},
-			exclude = {
-
-			}, -- table: groups you don't want to clear
+				"BufferLineTabClose",
+				"BufferlineBufferSelected",
+				"BufferLineFill", -- clear this
+				"BufferLineBackground",
+				"BufferLineSeparator", -- clear
+				"BufferLineIndicatorSelected",
+			}
 		})
 	end}
 }

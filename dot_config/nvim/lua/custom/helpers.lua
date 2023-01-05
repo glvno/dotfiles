@@ -12,7 +12,7 @@ function M.sln_helper_omni(omnisharp_bin, pid)
 		proj_file_name = i
 	end
 	-- hardcoded exceptions
-	if proj_file_name == 'CCI.Public_v3' or proj_file_name == 'CCI.Public_v3.Tests' then
+	if proj_file_name == 'CCI.Public_v3' or proj_file_name == 'CCI.Public_v3.Tests' or proj_file_name == 'CCI.Commerce.CheckoutAntiCorruption' then
 			return {omnisharp_bin, '--languageserver', '-s', 'CCI.Commerce'  .. '.sln', '--hostPID', tostring(pid)  }
 	elseif proj_file_name == 'CCI.WebUI.RetailAtTarget' then
 			return {omnisharp_bin, '--languageserver', '-s', 'WebUI.RetailAtTarget'  .. '.sln', '--hostPID', tostring(pid)  }
