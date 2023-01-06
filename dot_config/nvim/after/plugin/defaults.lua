@@ -60,6 +60,12 @@ vim.api.nvim_set_keymap(
 	':Telescope keymaps<cr>',
 	{ noremap = true }
 )
+vim.api.nvim_set_keymap(
+	'n',
+	'<space>th',
+	':Telescope highlights<cr>',
+	{ noremap = true }
+)
 -- tree 
 vim.api.nvim_set_keymap(
 	'n',
@@ -284,3 +290,23 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
+
+-- mind.nvim
+
+vim.api.nvim_set_keymap('n', '<leader>mo', '<cmd>MindOpenMain<CR>', {noremap=true})
+vim.api.nvim_set_keymap('n', '<leader>mc', '<cmd>MindClose<CR>', {noremap=true})
+vim.keymap.set('n', '<leader>mn', function()
+          require'mind'.wrap_main_tree_fn(function(args)
+            require'mind.commands'.create_node_index(
+              args.get_tree(),
+              require'mind.node'.MoveDir.INSIDE_END,
+              args.save_tree,
+              args.opts
+            )
+          end)
+        end)
+
+
+vim.api.nvim_set_hl(0, 'TreesitterContext',           {link = 'lualine_c_normal', default = true})
+vim.api.nvim_set_hl(0, 'TreesitterContextLineNumber', {link = 'lualine_c_normal',      default = true})
+vim.api.nvim_set_hl(0, 'TreesitterContextBottom',     {link = 'lualine_c_normal',        default = true})

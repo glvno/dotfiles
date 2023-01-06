@@ -34,7 +34,8 @@ local start_time
 local before_init = function()
 	-- print('initializing lsp')
 	start_time = os.time()
-	vim.cmd [[colorscheme gruvbox-material]]
+	-- vim.cmd [[colorscheme gruvbox-material]]
+	vim.cmd [[TransparentDisable]]
 	-- vim.cmd [[hi Normal guibg=NONE ctermbg=NONE]]
 end
 
@@ -125,7 +126,8 @@ require('nvim-treesitter.configs').setup {
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
 	local end_time = os.time()
-	vim.cmd [[colorscheme gruvbox]]
+	-- vim.cmd [[colorscheme gruvbox]]
+	vim.cmd [[TransparentEnable]]
 	local elapsed_time = end_time - start_time
 
 	print('lsp attached in ' .. tostring(elapsed_time) .. ' seconds')

@@ -25,7 +25,7 @@ return {
 
 	{ -- Highlight, edit, and navigate code
 		'nvim-treesitter/nvim-treesitter',
-		dependencies = { 'p00f/nvim-ts-rainbow' },
+		dependencies = { 'mrjones2014/nvim-ts-rainbow' },
 		build = function()
 			pcall(require('nvim-treesitter.install').update { with_sync = true })
 		end,
@@ -162,7 +162,7 @@ return {
 				palette_overrides = {},
 				overrides = {},
 				dim_inactive = false,
-				transparent_mode = true,
+				transparent_mode = false,
 			})
 			vim.cmd('colorscheme gruvbox')
 		end },
@@ -193,7 +193,14 @@ return {
 	},
 
 
-	{'nvim-treesitter/nvim-treesitter-context'},
+	{'nvim-treesitter/nvim-treesitter-context',
+	config = function()
+			require'treesitter-context'.setup{
+				separator = ''
+			}
+	
+		end
+	},
 	{'nvim-telescope/telescope-file-browser.nvim'},
 	'f-person/git-blame.nvim',
 	'mfussenegger/nvim-dap',
@@ -235,13 +242,23 @@ return {
 				-- In particular, when you set it to 'all', that means all available groups
 
 				-- example of akinsho/nvim-bufferline.lua
-				"BufferLineTabClose",
-				"BufferlineBufferSelected",
-				"BufferLineFill", -- clear this
-				"BufferLineBackground",
-				"BufferLineSeparator", -- clear
-				"BufferLineIndicatorSelected",
+				-- "BufferLineTabClose",
+				-- "BufferlineBufferSelected",
+				-- "BufferLineFill", -- clear this
+				-- "BufferLineBackground",
+				-- "BufferLineSeparator", -- clear
+				-- "BufferLineIndicatorSelected",
+				-- "BufferLineDevIconCsSelected",
+				-- "BufferLineDevIconCsInactive"
 			}
 		})
-	end}
+	end},
+	{
+		'phaazon/mind.nvim',
+		version = 'v2.2',
+		config = function()
+			require'mind'.setup()
+		end
+	},
+	'stevearc/dressing.nvim'
 }
