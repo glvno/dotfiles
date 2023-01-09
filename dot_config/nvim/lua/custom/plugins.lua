@@ -99,7 +99,7 @@ return {
 							['<C-d>'] = false,
 						},
 					},
-						path_display = {"truncate"}
+					path_display = {"truncate"}
 				},
 			}
 		end
@@ -194,11 +194,11 @@ return {
 
 
 	{'nvim-treesitter/nvim-treesitter-context',
-	config = function()
+		config = function()
 			require'treesitter-context'.setup{
 				separator = ''
 			}
-	
+
 		end
 	},
 	{'nvim-telescope/telescope-file-browser.nvim'},
@@ -250,7 +250,11 @@ return {
 				-- "BufferLineIndicatorSelected",
 				-- "BufferLineDevIconCsSelected",
 				-- "BufferLineDevIconCsInactive"
+			},
+			exclude = {
+
 			}
+
 		})
 	end},
 	{
@@ -260,5 +264,81 @@ return {
 			require'mind'.setup()
 		end
 	},
-	'stevearc/dressing.nvim'
+	-- 'stevearc/dressing.nvim'
+	'MunifTanjim/nui.nvim',
+	{"rcarriga/nvim-notify",
+		config = function()
+
+			require('notify').setup({
+				background_colour = "#000000",
+				stages = "static"
+			})
+	end},
+	{
+
+		'folke/noice.nvim',
+		dependencies = {
+
+		},
+		config = function()
+			require("noice").setup({
+				lsp = {
+					-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+					override = {
+						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+						["vim.lsp.util.stylize_markdown"] = true,
+						["cmp.entry.get_documentation"] = true,
+					},
+				},
+				-- you can enable a preset for easier configuration
+				presets = {
+					bottom_search = true, -- use a classic bottom cmdline for search
+					command_palette = true, -- position the cmdline and popupmenu together
+					long_message_to_split = true, -- long messages will be sent to a split
+					inc_rename = false, -- enables an input dialog for inc-rename.nvim
+					lsp_doc_border = false, -- add a border to hover docs and signature help
+				},
+			})
+
+		end
+	},
+	{
+		"rest-nvim/rest.nvim",
+		config = function()
+			require("rest-nvim").setup({
+				-- Open request results in a horizontal split
+				result_split_horizontal = false,
+				-- Keep the http file buffer above|left when split horizontal|vertical
+				result_split_in_place = false,
+				-- Skip SSL verification, useful for unknown certificates
+				skip_ssl_verification = false,
+				-- Encode URL before making request
+				encode_url = true,
+				-- Highlight request on run
+				highlight = {
+					enabled = true,
+					timeout = 150,
+				},
+				result = {
+					-- toggle showing URL, HTTP info, headers at top the of result window
+					show_url = true,
+					show_http_info = true,
+					show_headers = true,
+					-- executables or functions for formatting response body [optional]
+					-- set them to false if you want to disable them
+					formatters = {
+						json = "jq",
+						html = function(body)
+							return vim.fn.system({"tidy", "-i", "-q", "-"}, body)
+						end
+					},
+				},
+				-- Jump to request line on run
+				jump_to_request = false,
+				env_file = '.env',
+				custom_dynamic_variables = {},
+				yank_dry_run = true,
+			})
+		end
+	}
 }

@@ -1,4 +1,5 @@
 
+vim.opt.termguicolors = true
 vim.g.is_osx = vim.loop.os_uname().sysname == 'Darwin'
 
 -- Set <space> as the leader key
@@ -55,7 +56,7 @@ require('telescope').load_extension 'file_browser'
 require('orgmode').setup_ts_grammar()
 require('nvim-treesitter.configs').setup {
 	-- Add languages to be installed here that you want installed for treesitter
-	ensure_installed = { 'org', 'c_sharp', 'lua', 'rust', 'typescript', 'help', 'svelte', 'vim' },
+	ensure_installed = { "http", "json", 'org', 'c_sharp', 'lua', 'rust', 'typescript', 'help', 'svelte', 'vim', 'regex', 'bash', 'markdown', 'markdown_inline' },
 	highlight = {
 		enable = true,
 		additional_vim_regex_highlighting = { 'org' }

@@ -117,7 +117,6 @@ vim.opt.undofile = true
 vim.opt.incsearch = true
 vim.opt.scrolloff = 8
 vim.opt.signcolumn = 'yes'
-vim.opt.termguicolors = true
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.smartcase = true
 vim.opt.ignorecase = true
@@ -290,6 +289,9 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
+vim.keymap.set('n', '<leader>ll', function()
+	require('lsp_lines').toggle()
+end)
 
 -- mind.nvim
 
@@ -310,3 +312,7 @@ vim.keymap.set('n', '<leader>mn', function()
 vim.api.nvim_set_hl(0, 'TreesitterContext',           {link = 'lualine_c_normal', default = true})
 vim.api.nvim_set_hl(0, 'TreesitterContextLineNumber', {link = 'lualine_c_normal',      default = true})
 vim.api.nvim_set_hl(0, 'TreesitterContextBottom',     {link = 'lualine_c_normal',        default = true})
+
+
+
+vim.api.nvim_set_keymap('n', '<leader>rr', '<Plug>RestNvim', {noremap=true})
